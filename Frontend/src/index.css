@@ -72,6 +72,33 @@
   }
 }
 
+@utility text-stroke {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-smoke-light);
+
+  @media (min-width: 640px) {
+    -webkit-text-stroke-width: 2.5px;
+  }
+}
+
+@utility text-stroke-gold {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-gold);
+
+  @media (min-width: 640px) {
+    -webkit-text-stroke-width: 2.5px;
+  }
+}
+
+@utility text-stroke-bone {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-bone);
+
+  @media (min-width: 640px) {
+    -webkit-text-stroke-width: 2.5px;
+  }
+}
+
 /* Scroll reveal */
 @layer utilities {
   .reveal {

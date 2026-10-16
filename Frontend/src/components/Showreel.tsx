@@ -20,7 +20,7 @@ export function Showreel({ showreel }: ShowreelProps) {
               <span className="animate-pulse-dot inline-block size-1.5 rounded-full bg-gold" aria-hidden="true" />
               Showreel · {showreel.length}
             </span>
-            <h2 className="max-w-3xl font-display text-4xl font-extrabold uppercase leading-[0.95] tracking-tight text-bone sm:text-5xl lg:text-6xl">
+            <h2 className="max-w-3xl font-display text-5xl font-black uppercase leading-[0.9] tracking-tight text-bone sm:text-6xl lg:text-7xl">
               See the <span className="text-gold-gradient">cut</span>
             </h2>
             <p className="max-w-xl text-base leading-relaxed text-ashtray">{showreel.caption}</p>

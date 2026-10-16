@@ -4,7 +4,9 @@ import { Contact } from '../components/Contact'
 import { Footer } from '../components/Footer'
 import { Hero } from '../components/Hero'
 import { Marquee } from '../components/Marquee'
+import { Manifesto } from '../components/Manifesto'
 import { Nav } from '../components/Nav'
+import { Process } from '../components/Process'
 import { Services } from '../components/Services'
 import { Showreel } from '../components/Showreel'
 import { Testimonials } from '../components/Testimonials'
@@ -46,8 +48,10 @@ export function Home() {
       <main>
         <Hero />
         <Marquee />
+        <Manifesto />
         <Work projects={projects} />
         <Showreel showreel={site.showreel} />
+        <Process />
         <Services services={site.services} />
         <About about={site.about} brand={site.brand} />
         <Testimonials testimonials={site.testimonials} />

@@ -49,15 +49,17 @@ export function About({ about, brand }: AboutProps) {
           <div className="grid gap-px bg-smoke sm:grid-cols-1">
             <div className="bg-ink p-6 sm:p-8">
               <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">Positioning</p>
-              <p className="mt-3 font-display text-2xl font-extrabold uppercase leading-tight tracking-tight text-bone">
+              <p className="mt-3 font-display text-2xl font-extrabold uppercase leading-tight tracking-tight text-bone sm:text-3xl">
                 {brand.positioning}
               </p>
             </div>
             <div className="grid grid-cols-3 gap-px bg-smoke">
               {stats.map((s) => (
                 <div key={s.label} className="bg-ink p-4 text-center sm:p-6">
-                  <p className="font-display text-3xl font-black tracking-tight text-bone sm:text-4xl">{s.value}</p>
-                  <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.2em] text-ashtray">{s.label}</p>
+                  <p className="font-display text-4xl font-black leading-none tracking-tight text-bone sm:text-5xl lg:text-6xl">
+                    {s.value}
+                  </p>
+                  <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.2em] text-ashtray">{s.label}</p>
                 </div>
               ))}
             </div>

@@ -27,7 +27,7 @@ export function Services({ services }: ServicesProps) {
               <div className="group flex items-center gap-4 border-b border-smoke px-1 py-6 transition-colors duration-200 hover:bg-ink/50 sm:gap-6 sm:px-4">
                 <span className="font-mono text-xs tracking-[0.2em] text-gold">{s.index}</span>
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-display text-xl font-bold uppercase tracking-tight text-bone sm:text-2xl">
+                  <h3 className="font-display text-2xl font-black uppercase tracking-tight text-bone transition-colors duration-200 group-hover:text-gold sm:text-3xl">
                     {s.name}
                   </h3>
                   <p className="mt-1 text-sm leading-relaxed text-ashtray">{s.description}</p>

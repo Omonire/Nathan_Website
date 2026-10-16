@@ -40,6 +40,12 @@ export function Footer({ brand, socials }: FooterProps) {
               <a href="#work" className="cursor-pointer text-sm text-stone-mist hover:text-gold">
                 Work
               </a>
+              <a href="#manifesto" className="cursor-pointer text-sm text-stone-mist hover:text-gold">
+                The Split
+              </a>
+              <a href="#process" className="cursor-pointer text-sm text-stone-mist hover:text-gold">
+                Process
+              </a>
               <a href="#services" className="cursor-pointer text-sm text-stone-mist hover:text-gold">
                 Services
               </a>

@@ -5,6 +5,8 @@ import { CloseIcon, MenuIcon } from './Icons'
 
 const links = [
   { href: '#work', label: 'Work' },
+  { href: '#manifesto', label: 'The Split' },
+  { href: '#process', label: 'Process' },
   { href: '#services', label: 'Services' },
   { href: '#about', label: 'About' },
   { href: '#reel', label: 'Showreel' },

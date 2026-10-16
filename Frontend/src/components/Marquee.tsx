@@ -1,18 +1,30 @@
-const items = ['Video Editing', 'Color Grading', 'Sound Design', 'Motion Graphics', 'Thumbnails', 'YouTube Long-Form', 'Shorts & Reels']
+const items = [
+  'Video Editing',
+  'Color Grading',
+  'Sound Design',
+  'Motion Graphics',
+  'Thumbnails',
+  'YouTube Long-Form',
+  'Shorts & Reels',
+]
 
 export function Marquee() {
   const row = [...items, ...items]
   return (
-    <div className="border-y border-smoke bg-coal" aria-hidden="true">
-      <div className="overflow-hidden py-3.5">
-        <div className="marquee-track flex w-max items-center gap-8 whitespace-nowrap">
-          {row.map((item, i) => (
-            <span key={`${item}-${i}`} className="flex items-center gap-8">
-              <span className="font-mono text-xs uppercase tracking-[0.3em] text-ashtray">{item}</span>
-              <span className="text-gold">✦</span>
+    <div className="overflow-hidden border-y border-smoke bg-coal py-5 sm:py-7" aria-hidden="true">
+      <div className="marquee-track flex w-max items-center gap-10 whitespace-nowrap sm:gap-14">
+        {row.map((item, i) => (
+          <span key={`${item}-${i}`} className="flex items-center gap-10 sm:gap-14">
+            <span
+              className={`font-display text-3xl font-black uppercase tracking-tight sm:text-5xl ${
+                items.indexOf(item) % 2 === 0 ? 'text-bone' : 'text-stroke-gold'
+              }`}
+            >
+              {item}
             </span>
-          ))}
-        </div>
+            <span className="text-gold text-xl sm:text-2xl">✦</span>
+          </span>
+        ))}
       </div>
     </div>
   )
