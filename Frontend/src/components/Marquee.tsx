@@ -1,14 +1,13 @@
-const items = [
-  'Video Editing',
-  'Color Grading',
-  'Sound Design',
-  'Motion Graphics',
-  'Thumbnails',
-  'YouTube Long-Form',
-  'Shorts & Reels',
-]
+import type { Service } from '../data/site'
 
-export function Marquee() {
+const FALLBACK_ITEMS = ['Video Editing', 'Color Grading', 'Sound Design', 'Motion Graphics']
+
+type MarqueeProps = {
+  services?: Service[]
+}
+
+export function Marquee({ services }: MarqueeProps) {
+  const items = services && services.length ? services.map((s) => s.name) : FALLBACK_ITEMS
   const row = [...items, ...items]
   return (
     <div className="overflow-hidden border-y border-smoke bg-coal py-5 sm:py-7" aria-hidden="true">

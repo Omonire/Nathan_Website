@@ -44,10 +44,10 @@ export function Home() {
 
   return (
     <div className="bg-ink text-bone">
-      <Nav />
+      <Nav brand={site.brand} />
       <main>
-        <Hero />
-        <Marquee />
+        <Hero contact={site.contact} showreel={site.showreel} />
+        <Marquee services={site.services} />
         <Manifesto />
         <Work projects={projects} />
         <Showreel showreel={site.showreel} />
@@ -57,7 +57,7 @@ export function Home() {
         <Testimonials testimonials={site.testimonials} />
         <Contact contact={site.contact} socials={site.socials} />
       </main>
-      <Footer brand={site.brand} socials={site.socials} />
+      <Footer brand={site.brand} socials={site.socials} contact={site.contact} />
     </div>
   )
 }

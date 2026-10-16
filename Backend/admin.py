@@ -1,6 +1,7 @@
 import os
+import secrets
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, current_app, jsonify, request
 
 from sqlite import get_db
 
@@ -10,9 +11,11 @@ bp = Blueprint("admin", __name__, url_prefix="/api/admin")
 def _authorized():
     token = os.environ.get("ADMIN_TOKEN")
     if not token:
-        return True
-    provided = request.headers.get("X-Admin-Token") or request.args.get("token")
-    return provided == token
+        # No token configured: allow admin routes only while debugging locally,
+        # fail closed in production so submissions are never exposed.
+        return bool(current_app.debug)
+    provided = request.headers.get("X-Admin-Token") or request.args.get("token") or ""
+    return secrets.compare_digest(provided, token)
 
 
 @bp.get("/messages")

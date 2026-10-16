@@ -1,8 +1,14 @@
+import type { SiteContent } from '../data/site'
 import { btnGhost, btnGold } from '../lib/ui'
 import { ArrowRightIcon, PlayIcon } from './Icons'
 import { Reveal } from './Reveal'
 
-export function Hero() {
+type HeroProps = {
+  contact: SiteContent['contact']
+  showreel: SiteContent['showreel']
+}
+
+export function Hero({ contact, showreel }: HeroProps) {
   return (
     <section id="top" className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden">
       {/* Showreel background — swap for <video> once an asset exists */}
@@ -24,7 +30,7 @@ export function Hero() {
               Available for freelance · YouTube &amp; long-form
             </p>
             <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ashtray sm:text-xs">
-              Benin City, NG — Working worldwide
+              {contact.location}
             </p>
           </div>
         </Reveal>
@@ -69,13 +75,13 @@ export function Hero() {
                 Send footage to:
               </p>
               <a
-                href="mailto:hello@nathanno.com"
+                href={`mailto:${contact.email}`}
                 className="mt-1 block cursor-pointer font-display text-lg font-bold uppercase tracking-tight text-bone transition-colors duration-200 hover:text-gold sm:text-xl"
               >
-                hello@nathanno.com
+                {contact.email}
               </a>
               <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.3em] text-ashtray">
-                Reel <span className="text-gold">01:20</span> · Reply within 24h
+                Reel <span className="text-gold">{showreel.length}</span> · Reply within 24h
               </p>
             </div>
           </Reveal>

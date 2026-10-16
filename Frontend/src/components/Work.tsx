@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Project } from '../data/site'
-import { workTags } from '../data/site'
 import { ArrowRightIcon, CloseIcon, PlayIcon } from './Icons'
 import { Poster } from './Poster'
 import { Reveal } from './Reveal'
@@ -15,7 +14,13 @@ export function Work({ projects }: WorkProps) {
   const [tag, setTag] = useState('All')
   const [active, setActive] = useState<Project | null>(null)
 
-  const shown = tag === 'All' ? projects : projects.filter((p) => p.tag === tag)
+  const tags = useMemo(() => {
+    const unique = Array.from(new Set(projects.map((p) => p.tag).filter(Boolean)))
+    return ['All', ...unique]
+  }, [projects])
+
+  const activeTag = tags.includes(tag) ? tag : 'All'
+  const shown = activeTag === 'All' ? projects : projects.filter((p) => p.tag === activeTag)
 
   useEffect(() => {
     if (!active) return
@@ -46,13 +51,13 @@ export function Work({ projects }: WorkProps) {
 
         <Reveal>
           <div className="mt-10 flex flex-wrap justify-center gap-2">
-            {workTags.map((t) => (
+            {tags.map((t) => (
               <button
                 key={t}
                 type="button"
                 onClick={() => setTag(t)}
                 className={`cursor-pointer rounded-none border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.2em] transition-colors duration-200 ${
-                  tag === t
+                  activeTag === t
                     ? 'border-gold bg-gold/10 text-gold'
                     : 'border-smoke text-ashtray hover:border-smoke-light hover:text-bone'
                 }`}

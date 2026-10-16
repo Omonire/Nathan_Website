@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import type { SiteContent } from '../data/site'
 import { btnGold } from '../lib/ui'
 import { Brand } from './Brand'
 import { CloseIcon, MenuIcon } from './Icons'
@@ -13,7 +14,11 @@ const links = [
   { href: '#contact', label: 'Contact' },
 ]
 
-export function Nav() {
+type NavProps = {
+  brand: SiteContent['brand']
+}
+
+export function Nav({ brand }: NavProps) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -31,8 +36,8 @@ export function Nav() {
       }`}
     >
       <div className="container-slick flex h-16 items-center justify-between sm:h-20">
-        <a href="#top" className="flex cursor-pointer items-center gap-2.5" aria-label="Nathan N.O — home">
-          <Brand />
+        <a href="#top" className="flex cursor-pointer items-center gap-2.5" aria-label={`${brand.name} — home`}>
+          <Brand brand={brand} />
         </a>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">

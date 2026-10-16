@@ -214,5 +214,3 @@ export const projects: Project[] = [
     result: 'Featured',
   },
 ]
-
-export const workTags = ['All', 'Long-Form', 'Brand', 'Shorts', 'Podcast', 'Commercial', 'Music']

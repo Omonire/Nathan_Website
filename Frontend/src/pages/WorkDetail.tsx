@@ -7,27 +7,52 @@ import { fetchProject } from '../lib/api'
 
 export function WorkDetail() {
   const { slug } = useParams<{ slug: string }>()
-  const [project, setProject] = useState<Project | null>(null)
+  const [state, setState] = useState<{ slug?: string; project: Project | null }>({ project: null })
 
   useEffect(() => {
     let alive = true
     ;(async () => {
       if (!slug) return
       const p = await fetchProject(slug)
-      if (alive) setProject(p ?? null)
+      if (alive) setState({ slug, project: p ?? null })
     })()
     return () => {
       alive = false
     }
   }, [slug])
 
-  if (!project) {
+  const loading = state.slug !== slug
+
+  if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-ink">
         <div className="border border-smoke bg-coal/50 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.3em] text-ashtray">
           Loading…
         </div>
       </div>
+    )
+  }
+
+  const project = state.project
+
+  if (!project) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-ink px-6 text-center">
+        <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold">404</p>
+        <h1 className="font-display text-4xl font-extrabold uppercase tracking-tight text-bone sm:text-5xl">
+          Project not found
+        </h1>
+        <p className="max-w-sm text-sm leading-relaxed text-stone-mist">
+          That piece may have been moved or renamed. Head back and browse the rest of the work.
+        </p>
+        <Link
+          to="/"
+          className="inline-flex cursor-pointer items-center gap-2 rounded-none bg-metallic px-6 py-3.5 font-display text-sm font-bold uppercase tracking-[0.15em] text-ink transition-all duration-200 hover:brightness-110"
+        >
+          <ArrowLeftIcon className="size-3.5" />
+          Back to work
+        </Link>
+      </main>
     )
   }
 

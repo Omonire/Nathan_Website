@@ -12,7 +12,7 @@ type ContactProps = {
 }
 
 export function Contact({ contact, socials }: ContactProps) {
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', message: '', website: '' })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle')
   const [serverError, setServerError] = useState('')
@@ -36,7 +36,11 @@ export function Contact({ contact, socials }: ContactProps) {
       setStatus('sent')
     } else {
       setStatus('idle')
-      setServerError(res.error ?? 'Something went wrong.')
+      if (res.errors && Object.keys(res.errors).length) {
+        setErrors(res.errors)
+      } else {
+        setServerError(res.error ?? 'Something went wrong.')
+      }
     }
   }
 
@@ -115,6 +119,18 @@ export function Contact({ contact, socials }: ContactProps) {
             </div>
           ) : (
             <form onSubmit={onSubmit} noValidate className="border border-smoke bg-coal/40 p-6 sm:p-8">
+              <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+                <label htmlFor="website">Website</label>
+                <input
+                  id="website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={form.website}
+                  onChange={set('website')}
+                />
+              </div>
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label className={labelCls} htmlFor="name">

@@ -57,7 +57,7 @@ def _testimonials(conn):
 
 def create_app():
     app = Flask(__name__)
-    app.config["JSON_SORT_KEYS"] = False
+    app.json.sort_keys = False
 
     try:
         from flask_cors import CORS

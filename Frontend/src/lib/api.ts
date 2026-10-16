@@ -47,16 +47,28 @@ export type ContactPayload = {
   name: string
   email: string
   message: string
+  website?: string
 }
 
-export async function sendContact(payload: ContactPayload): Promise<{ ok: boolean; error?: string }> {
+export type ContactResult = {
+  ok: boolean
+  error?: string
+  errors?: Record<string, string>
+}
+
+export async function sendContact(payload: ContactPayload): Promise<ContactResult> {
   try {
     const res = await fetch(`${API_BASE}/api/contact`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     })
-    if (!res.ok) return { ok: false, error: `Request failed (${res.status})` }
+    const data = (await res.json().catch(() => null)) as
+      | { ok?: boolean; errors?: Record<string, string>; error?: string }
+      | null
+    if (!res.ok) {
+      return { ok: false, errors: data?.errors, error: data?.error ?? `Request failed (${res.status})` }
+    }
     return { ok: true }
   } catch {
     return { ok: false, error: 'Could not reach the server. Try email instead.' }

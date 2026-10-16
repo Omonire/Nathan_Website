@@ -7,9 +7,10 @@ import { ArrowRightIcon } from './Icons'
 type FooterProps = {
   brand: SiteContent['brand']
   socials: SiteContent['socials']
+  contact: SiteContent['contact']
 }
 
-export function Footer({ brand, socials }: FooterProps) {
+export function Footer({ brand, socials, contact }: FooterProps) {
   const [year] = useState(() => new Date().getFullYear())
 
   return (
@@ -30,7 +31,7 @@ export function Footer({ brand, socials }: FooterProps) {
 
         <div className="mt-16 grid gap-10 border-t border-smoke pt-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="flex flex-col gap-3">
-            <Brand />
+            <Brand brand={brand} />
             <p className="mt-2 text-sm text-ashtray">{brand.positioning}</p>
           </div>
 
@@ -64,8 +65,13 @@ export function Footer({ brand, socials }: FooterProps) {
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">Contact</p>
             <ul className="mt-4 space-y-2 text-sm text-stone-mist">
-              <li>Remote · Worldwide</li>
-              <li>Booking new projects</li>
+              <li>
+                <a href={`mailto:${contact.email}`} className="cursor-pointer transition-colors hover:text-gold">
+                  {contact.email}
+                </a>
+              </li>
+              <li>{contact.location}</li>
+              <li>{contact.availability}</li>
             </ul>
           </div>
 
