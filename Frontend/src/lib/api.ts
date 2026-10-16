@@ -2,11 +2,15 @@ import { projects as fallbackProjects, site as fallbackSite, type Project, type 
 
 const TIMEOUT_MS = 4000
 
+// In dev the Vite proxy forwards /api to the local Flask server.
+// In production the API lives on a separate origin (set VITE_API_URL at build time).
+const API_BASE = (import.meta.env.VITE_API_URL ?? '').replace(/\/+$/, '')
+
 async function getJson<T>(path: string): Promise<T> {
   const ctrl = new AbortController()
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS)
   try {
-    const res = await fetch(path, { signal: ctrl.signal, headers: { Accept: 'application/json' } })
+    const res = await fetch(`${API_BASE}${path}`, { signal: ctrl.signal, headers: { Accept: 'application/json' } })
     if (!res.ok) throw new Error(`${path} -> ${res.status}`)
     return (await res.json()) as T
   } finally {
@@ -47,7 +51,7 @@ export type ContactPayload = {
 
 export async function sendContact(payload: ContactPayload): Promise<{ ok: boolean; error?: string }> {
   try {
-    const res = await fetch('/api/contact', {
+    const res = await fetch(`${API_BASE}/api/contact`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
