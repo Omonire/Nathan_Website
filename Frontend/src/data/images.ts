@@ -2,7 +2,7 @@ const px = (id: number, w = 1200) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`
 
 export const images = {
-  hero: px(12464841, 1920),
+  hero: '/images/hero-poster.jpg',
   interior: px(7518728, 1600),
   tools: px(7697208, 1600),
   projects: [px(5188621, 900), px(20302331, 900), px(18483769, 900)],
