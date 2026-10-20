@@ -143,7 +143,7 @@ export function Booking() {
                 <div>
                   <h3 className="font-display text-lg font-bold uppercase text-bone">Delivery window</h3>
                   <p className="mt-1 text-sm text-ashtray">
-                    Kick off within the next {site.booking.daysAhead} days · first-cut target by {to12h(site.booking.slotEnd)}
+                    Kick off within the next {site.booking.daysAhead} days · first draft by {to12h(site.booking.slotEnd)}
                   </p>
                 </div>
               </div>

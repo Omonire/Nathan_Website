@@ -25,7 +25,7 @@ export function Footer() {
       <Reveal>
         <div className="container-slick flex flex-col items-center gap-6 py-16 text-center sm:py-20">
           <h2 className="font-display text-4xl font-black uppercase leading-[0.95] tracking-tight text-bone sm:text-6xl">
-            Let's make <span className="text-gold-gradient">it cut.</span>
+            Let's make it <span className="text-gold-gradient">convert.</span>
           </h2>
           <a href="#book" className={btnGold}>
             Start a Project
