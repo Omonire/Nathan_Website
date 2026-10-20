@@ -65,7 +65,7 @@ export function TestimonialManager() {
     const ok = editing ? await updateTestimonial(editing.id, form) : Boolean(await createTestimonial(form))
     setSaving(false)
     if (!ok) {
-      setError(testimonialsAdminEnabled ? 'Save failed. Check the admin token.' : 'Set VITE_ADMIN_TOKEN to enable saving.')
+      setError('Save failed. Your admin session may have expired — sign in again.')
       return
     }
     setShowForm(false)
@@ -100,8 +100,7 @@ export function TestimonialManager() {
 
       {!testimonialsAdminEnabled && (
         <p className="rounded-lg border border-gold/30 bg-gold/5 px-4 py-3 font-mono text-xs text-gold">
-          Read-only: set <span className="text-bone">VITE_ADMIN_TOKEN</span> on Vercel (matching the API's
-          ADMIN_TOKEN) to add, edit or delete.
+          Read-only — sign in above to add, edit or delete.
         </p>
       )}
 

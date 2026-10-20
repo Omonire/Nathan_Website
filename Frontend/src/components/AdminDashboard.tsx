@@ -5,6 +5,7 @@ import { ServiceManager } from './admin/ServiceManager'
 import { CategoryManager } from './admin/CategoryManager'
 import { SiteSettings } from './admin/SiteSettings'
 import { TestimonialManager } from './admin/TestimonialManager'
+import { isAdminAuthed, adminLogout } from '../lib/admin-auth'
 import { getHotDeals } from '../lib/cms'
 
 const POLL_MS = 5_000
@@ -333,8 +334,7 @@ export function AdminDashboard() {
   const mountedRef = useRef(true)
 
   useEffect(() => {
-    const isAuth = sessionStorage.getItem('slick_admin_auth') === 'true'
-    if (!isAuth) { navigate('/admin/login'); return }
+    if (!isAdminAuthed()) { navigate('/admin/login'); return }
     mountedRef.current = true
     return () => { mountedRef.current = false }
   }, [navigate])
@@ -354,7 +354,7 @@ export function AdminDashboard() {
   }, [])
 
   function handleLogout() {
-    sessionStorage.removeItem('slick_admin_auth')
+    adminLogout()
     navigate('/admin/login')
   }
 

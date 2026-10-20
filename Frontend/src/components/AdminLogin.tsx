@@ -1,19 +1,21 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-
-const VALID_USER = 'admin'
-const VALID_PASS = '1234'
+import { adminLogin } from '../lib/admin-auth'
 
 export function AdminLogin() {
   const navigate = useNavigate()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (username === VALID_USER && password === VALID_PASS) {
-      sessionStorage.setItem('slick_admin_auth', 'true')
+    setBusy(true)
+    setError('')
+    const ok = await adminLogin(username, password)
+    setBusy(false)
+    if (ok) {
       navigate('/admin/dashboard')
     } else {
       setError('Invalid username or password')
@@ -62,9 +64,10 @@ export function AdminLogin() {
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-gold px-4 py-2.5 font-mono text-sm font-bold uppercase tracking-wider text-ink transition hover:bg-gold/80"
+            disabled={busy}
+            className="w-full rounded-lg bg-gold px-4 py-2.5 font-mono text-sm font-bold uppercase tracking-wider text-ink transition hover:bg-gold/80 disabled:opacity-50"
           >
-            Sign In
+            {busy ? 'Signing In…' : 'Sign In'}
           </button>
         </form>
 

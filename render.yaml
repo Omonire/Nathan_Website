@@ -38,6 +38,13 @@ services:
       # dashboard (Environment tab) to query admin endpoints with ?token=...
       - key: ADMIN_TOKEN
         generateValue: true
+      # Admin dashboard login. The frontend posts these to /api/admin/login,
+      # which returns a short-lived session token — the password never ships to
+      # the browser. Set ADMIN_PASS to a strong value in the dashboard.
+      - key: ADMIN_USER
+        value: admin
+      - key: ADMIN_PASS
+        generateValue: true
       # Primary database. Required when DB=1.
       - key: DATABASE_URL
         fromDatabase:

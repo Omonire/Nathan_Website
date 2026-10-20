@@ -1,3 +1,5 @@
+import { API_BASE, adminHeaders, isAdminAuthed } from './admin-auth'
+
 export type Testimonial = {
   id: number
   quote: string
@@ -10,18 +12,6 @@ export type TestimonialInput = {
   quote: string
   name: string
   role: string
-}
-
-const API_BASE = (import.meta.env.VITE_BOOKINGS_API_URL || 'https://nathan-portfolio-backend-api.onrender.com/api/bookings').replace(
-  /\/bookings\/?$/,
-  '',
-)
-const ADMIN_TOKEN = (import.meta.env.VITE_ADMIN_TOKEN as string | undefined) || ''
-
-function adminHeaders(): HeadersInit {
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-  if (ADMIN_TOKEN) headers['X-Admin-Token'] = ADMIN_TOKEN
-  return headers
 }
 
 export async function fetchTestimonials(): Promise<Testimonial[]> {
@@ -74,4 +64,4 @@ export async function deleteTestimonial(id: number): Promise<boolean> {
   }
 }
 
-export const testimonialsAdminEnabled = Boolean(ADMIN_TOKEN)
+export const testimonialsAdminEnabled = isAdminAuthed()

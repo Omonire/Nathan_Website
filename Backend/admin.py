@@ -1,5 +1,6 @@
 import os
 import secrets
+import time
 
 from flask import Blueprint, current_app, jsonify, request
 
@@ -7,15 +8,83 @@ from db import get_db
 
 bp = Blueprint("admin", __name__, url_prefix="/api/admin")
 
+SESSION_TTL_SECONDS = 12 * 60 * 60
+_sessions: dict[str, float] = {}
+
+
+def _admin_credentials():
+    """Return (user, pass) from env, or (None, None) when not configured."""
+    return os.environ.get("ADMIN_USER"), os.environ.get("ADMIN_PASS")
+
+
+def _master_token():
+    return os.environ.get("ADMIN_TOKEN")
+
+
+def _issue_session():
+    token = secrets.token_urlsafe(32)
+    _sessions[token] = time.time() + SESSION_TTL_SECONDS
+    return token
+
+
+def _valid_session(token):
+    expiry = _sessions.get(token)
+    if expiry is None:
+        return False
+    if expiry < time.time():
+        _sessions.pop(token, None)
+        return False
+    return True
+
 
 def _authorized():
-    token = os.environ.get("ADMIN_TOKEN")
-    if not token:
-        # No token configured: allow admin routes only while debugging locally,
-        # fail closed in production so submissions are never exposed.
-        return bool(current_app.debug)
     provided = request.headers.get("X-Admin-Token") or request.args.get("token") or ""
-    return secrets.compare_digest(provided, token)
+    if not provided:
+        return False
+
+    master = _master_token()
+    if master and secrets.compare_digest(provided, master):
+        return True
+
+    if _valid_session(provided):
+        return True
+
+    # No master token configured: allow admin routes only while debugging locally,
+    # fail closed in production so submissions are never exposed.
+    if not master and not _admin_credentials()[0]:
+        return bool(current_app.debug)
+    return False
+
+
+@bp.post("/login")
+def login():
+    data = request.get_json(silent=True) or {}
+    username = str(data.get("username", "")).strip()
+    password = str(data.get("password", ""))
+
+    user, pw = _admin_credentials()
+    if user and pw:
+        ok = secrets.compare_digest(username, user) and secrets.compare_digest(password, pw)
+    else:
+        # No credentials configured: allow only while debugging locally.
+        ok = bool(current_app.debug) and bool(username)
+
+    if not ok:
+        return jsonify({"error": "Invalid username or password"}), 401
+
+    return jsonify({"ok": True, "token": _issue_session()})
+
+
+@bp.post("/logout")
+def logout():
+    provided = request.headers.get("X-Admin-Token") or request.args.get("token") or ""
+    _sessions.pop(provided, None)
+    return jsonify({"ok": True})
+
+
+@bp.get("/check")
+def check():
+    return jsonify({"authenticated": _authorized()})
 
 
 @bp.get("/messages")
