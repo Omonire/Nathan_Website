@@ -2,12 +2,11 @@ import { site } from '../data/site-content'
 import { btnGold } from '../lib/ui'
 import { Brand } from './brand'
 import { Reveal } from './Reveal'
-import { FacebookIcon, InstagramIcon, TikTokIcon } from './Icons'
+import { TikTokIcon, YouTubeIcon } from './Icons'
 import type { JSX } from 'react'
 
 const socialIcons: Record<string, (props: { className?: string }) => JSX.Element> = {
-  Instagram: InstagramIcon,
-  Facebook: FacebookIcon,
+  YouTube: YouTubeIcon,
   TikTok: TikTokIcon,
 }
 
@@ -87,7 +86,7 @@ export function Footer() {
         </p>
         <div className="flex items-center gap-3">
           {site.socials.map((s) => {
-            const Icon = socialIcons[s.label] ?? InstagramIcon
+            const Icon = socialIcons[s.label] ?? YouTubeIcon
             return (
               <a
                 key={s.label}

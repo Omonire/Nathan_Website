@@ -114,10 +114,8 @@ const contact = {
 }
 
 const socials = [
-  { label: 'YouTube', href: 'https://youtube.com/@nathanno' },
-  { label: 'Instagram', href: 'https://instagram.com/skidobanz' },
+  { label: 'YouTube', href: 'https://youtube.com/@Skidobanzz' },
   { label: 'TikTok', href: 'https://www.tiktok.com/@skidobanz.fx' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/nathanno' },
 ]
 
 const reviewStats = { average: 5.0, count: '47' }

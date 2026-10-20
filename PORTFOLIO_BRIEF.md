@@ -62,12 +62,12 @@ Fill in answers below. Leave blank to use placeholders.
 
 ## 7. Contact + Links
 - Email:
-- Instagram:
-- YouTube:
-- X/Twitter:
-- TikTok:
-- LinkedIn:
-- Behance:
+- Instagram: (none)
+- YouTube: @Skidobanzz
+- X/Twitter: (none)
+- TikTok: @skidobanz.fx
+- LinkedIn: (none)
+- Behance: (none)
 - Booking link/Calendly:
 
 ## 8. Decisions

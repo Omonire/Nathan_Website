@@ -91,9 +91,8 @@ const defaultSiteContent: SiteContent = {
     email: 'hello@nathanno.com',
   },
   socials: [
-    { label: 'YouTube', href: 'https://youtube.com/@nathanno' },
-    { label: 'Instagram', href: 'https://instagram.com/skidobanz' },
-    { label: 'TikTok', href: 'https://www.tiktok.com/@skidobanz_fx' },
+    { label: 'YouTube', href: 'https://youtube.com/@Skidobanzz' },
+    { label: 'TikTok', href: 'https://www.tiktok.com/@skidobanz.fx' },
   ],
 }
 

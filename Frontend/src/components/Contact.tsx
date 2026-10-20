@@ -1,13 +1,12 @@
 import { site } from '../data/site-content'
 import { SectionHeading } from './SectionHeading'
 import { Reveal } from './Reveal'
-import { ClockIcon, FacebookIcon, InstagramIcon, PhoneIcon, PinIcon, TikTokIcon } from './Icons'
+import { ClockIcon, PhoneIcon, PinIcon, TikTokIcon, YouTubeIcon } from './Icons'
 import type { JSX } from 'react'
 import { useState } from 'react'
 
 const socialIcons: Record<string, (props: { className?: string }) => JSX.Element> = {
-  Instagram: InstagramIcon,
-  Facebook: FacebookIcon,
+  YouTube: YouTubeIcon,
   TikTok: TikTokIcon,
 }
 
@@ -91,7 +90,7 @@ export function Contact() {
                   <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-ashtray">Follow the work</h3>
                   <div className="mt-3 flex gap-3">
                     {site.socials.map((s) => {
-                      const Icon = socialIcons[s.label] ?? InstagramIcon
+                      const Icon = socialIcons[s.label] ?? YouTubeIcon
                       return (
                         <a
                           key={s.label}
