@@ -1,7 +1,7 @@
 # Nathan N.O — Flask Backend
 
-PostgreSQL-backed API for the portfolio frontend (with an optional SQLite mode
-for offline development).
+PostgreSQL-backed API for the portfolio frontend (with a SQLite fallback for
+offline development).
 
 ## Setup
 
@@ -16,11 +16,12 @@ copy .env.example .env   # then set DATABASE_URL
 Runs on `http://127.0.0.1:5000`. The Vite dev server proxies `/api/*` here, so the
 frontend talks to it with same-origin requests (no CORS setup needed in dev).
 
-Database selection is controlled by `SQLITE`:
+Database selection is controlled by `DB`:
 
-- `SQLITE=0` (or unset) — PostgreSQL via `DATABASE_URL` (required). Fails to
-  start or returns `503` if it is unset or unreachable.
-- `SQLITE=1` — local SQLite file (`DATABASE_PATH`, defaults to `./portfolio.db`).
+- `DB=1` — PostgreSQL via `DATABASE_URL` (required). Fails to start or returns
+  `503` if it is unset or unreachable.
+- `DB=0` (or unset) — SQLite fallback at `DATABASE_PATH` (defaults to
+  `./portfolio.db`).
 
 The schema is created and seeded automatically on first run.
 
@@ -80,8 +81,8 @@ Set `ADMIN_TOKEN` to require the `X-Admin-Token` header on these routes.
 ## Files
 
 - `app.py` — Flask app + public API routes
-- `db.py` — database selector (`SQLITE` flag)
+- `db.py` — database selector (`DB` flag)
 - `postregsql.py` — psycopg2 connection wrapper + schema
-- `sqlite.py` — SQLite connection + schema (used when `SQLITE=1`)
+- `sqlite.py` — SQLite connection + schema (fallback when `DB` is not 1)
 - `seed.py` — placeholder content + `seed_all` / `reset_all`
 - `admin.py` — admin blueprint for messages

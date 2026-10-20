@@ -18,7 +18,7 @@ render.yaml Render blueprint: Postgres + Flask API
 cd Backend
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-$env:SQLITE=1; .\.venv\Scripts\python.exe app.py   # SQLite for local dev
+$env:DB=0; .\.venv\Scripts\python.exe app.py   # SQLite fallback for local dev
 
 # Frontend (http://localhost:5173)
 cd Frontend
@@ -42,7 +42,7 @@ Two services: the **frontend on Vercel**, the **API on Render**.
    `nathan-portfolio-api`.
 3. Confirm `https://nathan-portfolio-api.onrender.com/api/health` returns `{"ok": true}`.
 
-Notes: `SQLITE=0` pins the API to PostgreSQL (hard-fails if `DATABASE_URL` is
+Notes: `DB=1` pins the API to PostgreSQL (hard-fails if `DATABASE_URL` is
 missing). The free plan's API sleeps after ~15 min idle.
 
 ### 2. Frontend → Vercel

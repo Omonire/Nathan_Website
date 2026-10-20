@@ -61,7 +61,8 @@ Fill in answers below. Leave blank to use placeholders.
 - Quote 1, Name, Role:
 
 ## 7. Contact + Links
-- Email:
+- Email: nathannkuma@gmail.com
+- Phone: +2349031445311
 - Instagram: (none)
 - YouTube: @Skidobanzz
 - X/Twitter: (none)

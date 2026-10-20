@@ -87,8 +87,8 @@ const defaultSiteContent: SiteContent = {
   contact: {
     address: 'Remote · Worldwide',
     addressLine2: 'Based in Benin City, Nigeria (GMT+1)',
-    phone: '+234 000 000 0000',
-    email: 'hello@nathanno.com',
+    phone: '+2349031445311',
+    email: 'nathannkuma@gmail.com',
   },
   socials: [
     { label: 'YouTube', href: 'https://youtube.com/@Skidobanzz' },

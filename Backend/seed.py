@@ -23,16 +23,14 @@ SITE_DEFAULTS = {
         "clients": ["Creator Studio", "Independent Channels", "Brand Campaigns"],
     },
     "contact": {
-        "email": "hello@nathanno.com",
+        "email": "nathannkuma@gmail.com",
+        "phone": "+2349031445311",
         "location": "Remote \u00b7 Worldwide",
         "availability": "Booking new projects",
     },
     "socials": [
-        {"label": "YouTube", "href": "#"},
-        {"label": "Instagram", "href": "#"},
-        {"label": "TikTok", "href": "#"},
-        {"label": "LinkedIn", "href": "#"},
-        {"label": "Behance", "href": "#"},
+        {"label": "YouTube", "href": "https://youtube.com/@Skidobanzz"},
+        {"label": "TikTok", "href": "https://www.tiktok.com/@skidobanz.fx"},
     ],
 }
 

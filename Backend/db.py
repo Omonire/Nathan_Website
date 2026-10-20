@@ -1,9 +1,9 @@
 """Database selector.
 
-Set SQLITE=1 to use the local SQLite file (handy for offline dev). Any other
-value (or unset) uses PostgreSQL, which requires DATABASE_URL. A missing or
-unreachable PostgreSQL database is a hard error so misconfiguration never goes
-unnoticed.
+Set DB=1 to use PostgreSQL, which requires DATABASE_URL. Any other value (or
+unset) falls back to the local SQLite file (handy for offline dev). When DB=1 is
+requested but DATABASE_URL is missing, the selector raises so misconfiguration
+never goes unnoticed.
 """
 
 import os
@@ -18,18 +18,18 @@ def _database_url():
     return os.environ.get("DATABASE_URL", "").strip()
 
 
-def _use_sqlite():
-    return os.environ.get("SQLITE", "").strip() in {"1", "true", "True", "yes"}
+def _use_postgres():
+    return os.environ.get("DB", "").strip() in {"1", "true", "True", "yes"}
 
 
 def get_db():
-    if _use_sqlite():
-        return _sqlite_get_db()
+    if _use_postgres():
+        url = _database_url()
+        if not url:
+            raise RuntimeError("DB=1 requires DATABASE_URL to be set")
+        return postregsql.connect(url)
 
-    url = _database_url()
-    if not url:
-        raise RuntimeError("DATABASE_URL is not set (set SQLITE=1 to use SQLite)")
-    return postregsql.connect(url)
+    return _sqlite_get_db()
 
 
 def init_db(conn):

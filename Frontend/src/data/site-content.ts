@@ -107,8 +107,8 @@ const contact = {
   city: brand.city,
   address: 'Remote · Worldwide',
   addressLine2: 'Based in Benin City, Nigeria (GMT+1)',
-  phone: '+234 000 000 0000',
-  email: 'hello@nathanno.com',
+  phone: '+2349031445311',
+  email: 'nathannkuma@gmail.com',
   mapEmbedUrl:
     'https://www.openstreetmap.org/export/embed.html?bbox=5.44%2C6.20%2C5.75%2C6.50&layer=mapnik&marker=6.335%2C5.626',
 }
