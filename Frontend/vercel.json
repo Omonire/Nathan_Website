@@ -4,10 +4,5 @@
     { "source": "/admin/login", "destination": "/index.html" },
     { "source": "/admin/dashboard", "destination": "/index.html" },
     { "source": "/admin/(.*)", "destination": "/index.html" }
-  ],
-  "functions": {
-    "api/bookings.js": {
-      "maxDuration": 10
-    }
-  }
+  ]
 }
