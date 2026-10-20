@@ -1,14 +1,8 @@
-<svg width="256" height="256" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="g" x1="1" y1="1" x2="23" y2="23" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#b8922a" />
-      <stop offset="0.45" stop-color="#d9b64a" />
-      <stop offset="0.75" stop-color="#a67c00" />
-      <stop offset="1" stop-color="#e6cf8f" />
-    </linearGradient>
-  </defs>
-  <rect x="1.5" y="1.5" width="21" height="21" rx="0" fill="url(#g)" />
-  <g fill="#0C0A09" stroke="#0C0A09" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round">
-    <polygon points="9.5,7.5 15.5,12 9.5,16.5" />
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0C0A09"/>
+  <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="#292524"/>
+  <rect x="15" y="18" width="34" height="28" rx="3" fill="none" stroke="#C9A227" stroke-width="3"/>
+  <path d="M15 26 H49 M15 38 H49" stroke="#C9A227" stroke-width="2" stroke-linecap="round"/>
+  <path d="M22 18 V46 M42 18 V46" stroke="#C9A227" stroke-width="2" stroke-linecap="round"/>
+  <path d="M28 28.5 L36 32 L28 35.5 Z" fill="#C9A227"/>
 </svg>

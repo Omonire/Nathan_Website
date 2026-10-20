@@ -1,101 +1,112 @@
-import { useState } from 'react'
-import type { SiteContent } from '../data/site'
+import { site } from '../data/site-content'
 import { btnGold } from '../lib/ui'
-import { Brand } from './Brand'
-import { ArrowRightIcon } from './Icons'
+import { Brand } from './brand'
+import { Reveal } from './Reveal'
+import { FacebookIcon, InstagramIcon, TikTokIcon } from './Icons'
+import type { JSX } from 'react'
 
-type FooterProps = {
-  brand: SiteContent['brand']
-  socials: SiteContent['socials']
-  contact: SiteContent['contact']
+const socialIcons: Record<string, (props: { className?: string }) => JSX.Element> = {
+  Instagram: InstagramIcon,
+  Facebook: FacebookIcon,
+  TikTok: TikTokIcon,
 }
 
-export function Footer({ brand, socials, contact }: FooterProps) {
-  const [year] = useState(() => new Date().getFullYear())
+const navLinks = [
+  { href: '#services', label: 'Services' },
+  { href: '#work', label: 'Selected Work' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#reviews', label: 'Reviews' },
+  { href: '#location', label: 'Contact' },
+]
 
+export function Footer() {
+  const year = new Date().getFullYear()
   return (
-    <footer className="bg-ink">
-      <div className="container-slick border-t border-smoke py-16">
-        <div className="flex flex-col items-center gap-6 text-center">
-          <h2 className="max-w-3xl font-display text-4xl font-extrabold uppercase leading-[0.95] tracking-tight text-bone sm:text-5xl lg:text-6xl">
-            Ready to <span className="text-gold-gradient">cut it</span>?
+    <footer className="border-t border-smoke bg-coal">
+      <Reveal>
+        <div className="container-slick flex flex-col items-center gap-6 py-16 text-center sm:py-20">
+          <h2 className="font-display text-4xl font-black uppercase leading-[0.95] tracking-tight text-bone sm:text-6xl">
+            Let's make <span className="text-gold-gradient">it cut.</span>
           </h2>
-          <p className="max-w-xl text-base leading-relaxed text-ashtray">
-            Get cleaner pacing, sharper color and sound that keeps them watching.
-          </p>
-          <a href="#contact" className={btnGold}>
-            Hire Me
-            <ArrowRightIcon className="size-4" />
+          <a href="#book" className={btnGold}>
+            Start a Project
           </a>
         </div>
+      </Reveal>
 
-        <div className="mt-16 grid gap-10 border-t border-smoke pt-10 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="flex flex-col gap-3">
-            <Brand brand={brand} />
-            <p className="mt-2 text-sm text-ashtray">{brand.positioning}</p>
+      <div className="border-y border-smoke">
+        <div className="container-slick grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <Brand />
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-ashtray">
+              Cuts that hold, edits that convert. {site.brand.name} — video editing and post-production for YouTube
+              creators, based in {site.contact.city}.
+            </p>
           </div>
 
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">Explore</p>
-            <nav className="mt-4 flex flex-col gap-3">
-              <a href="#work" className="cursor-pointer text-sm text-stone-mist hover:text-gold">
-                Work
-              </a>
-              <a href="#manifesto" className="cursor-pointer text-sm text-stone-mist hover:text-gold">
-                The Split
-              </a>
-              <a href="#process" className="cursor-pointer text-sm text-stone-mist hover:text-gold">
-                Process
-              </a>
-              <a href="#services" className="cursor-pointer text-sm text-stone-mist hover:text-gold">
-                Services
-              </a>
-              <a href="#about" className="cursor-pointer text-sm text-stone-mist hover:text-gold">
-                About
-              </a>
-              <a href="#reel" className="cursor-pointer text-sm text-stone-mist hover:text-gold">
-                Showreel
-              </a>
-              <a href="#contact" className="cursor-pointer text-sm text-stone-mist hover:text-gold">
-                Contact
-              </a>
-            </nav>
-          </div>
-
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">Contact</p>
-            <ul className="mt-4 space-y-2 text-sm text-stone-mist">
-              <li>
-                <a href={`mailto:${contact.email}`} className="cursor-pointer transition-colors hover:text-gold">
-                  {contact.email}
-                </a>
-              </li>
-              <li>{contact.location}</li>
-              <li>{contact.availability}</li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold">Social</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {socials.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="border border-smoke px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-ashtray transition-colors duration-200 hover:border-gold/70 hover:text-gold"
-                >
-                  {s.label}
-                </a>
+          <nav aria-label="Footer">
+            <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-ashtray">Explore</h3>
+            <ul className="mt-4 space-y-2.5">
+              {navLinks.map((l) => (
+                <li key={l.href}>
+                  <a href={l.href} className="cursor-pointer text-sm text-stone-mist transition-colors hover:text-gold">
+                    {l.label}
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
+          </nav>
+
+          <div>
+            <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-ashtray">Availability</h3>
+            <p className="mt-4 text-sm text-bone">{site.hours.days}</p>
+            <p className="mt-1 text-sm text-ashtray">
+              {site.hours.open} – {site.hours.close}
+            </p>
+            <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-gold">{site.hours.note}</p>
+          </div>
+
+          <div>
+            <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-ashtray">Contact</h3>
+            <p className="mt-4 text-sm text-stone-mist">{site.contact.address}</p>
+            <p className="mt-1 text-sm text-ashtray">{site.contact.addressLine2}</p>
+            <p className="mt-3 text-sm text-stone-mist">{site.contact.phone}</p>
+            <a
+              href={`mailto:${site.contact.email}`}
+              className="mt-1 inline-block cursor-pointer text-sm text-bone transition-colors hover:text-gold"
+            >
+              {site.contact.email}
+            </a>
           </div>
         </div>
+      </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-smoke pt-6 sm:flex-row">
-          <p className="text-xs text-ashtray">© {year} {brand.name}. All rights reserved.</p>
-          <p className="text-xs text-ashtray">Made with precision — edit, color, sound.</p>
+      <div className="container-slick flex flex-col items-center justify-between gap-4 py-7 sm:flex-row">
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ashtray">
+          © {year} {site.brand.name} · {site.brand.studio}
+        </p>
+        <div className="flex items-center gap-3">
+          {site.socials.map((s) => {
+            const Icon = socialIcons[s.label] ?? InstagramIcon
+            return (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                className="inline-flex size-9 cursor-pointer items-center justify-center border border-smoke-light text-ashtray transition-colors duration-200 hover:border-gold hover:text-gold"
+              >
+                <Icon className="size-4" />
+              </a>
+            )
+          })}
+          <a
+            href="/admin/login"
+            className="ml-2 rounded-lg border border-smoke-light px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-ashtray transition-colors duration-200 hover:border-gold hover:text-gold"
+          >
+            Admin
+          </a>
         </div>
       </div>
     </footer>

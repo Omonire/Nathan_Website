@@ -51,6 +51,25 @@ CREATE TABLE IF NOT EXISTS messages (
     status     TEXT    NOT NULL DEFAULT 'new',
     created_at TEXT    NOT NULL DEFAULT (datetime('now'))
 );
+
+CREATE TABLE IF NOT EXISTS bookings (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    reference    TEXT    NOT NULL UNIQUE,
+    service_id   TEXT,
+    service_name TEXT,
+    barber_id    TEXT,
+    barber_name  TEXT,
+    booking_date TEXT,
+    booking_time TEXT,
+    client_name  TEXT    NOT NULL,
+    contact      TEXT    NOT NULL,
+    notes        TEXT    NOT NULL DEFAULT '',
+    status       TEXT    NOT NULL DEFAULT 'pending',
+    created_at   TEXT    NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS bookings_date_idx   ON bookings (booking_date);
+CREATE INDEX IF NOT EXISTS bookings_status_idx ON bookings (status);
 """
 
 

@@ -2,7 +2,7 @@ import json
 
 SITE_DEFAULTS = {
     "brand": {
-        "name": "Nathan N.O",
+        "name": "Nathan Nkuma O.",
         "role": "Video Editor & Post-Production",
         "positioning": "Video editor for YouTube creators",
     },
@@ -65,7 +65,8 @@ PROJECTS = [
      "A stylized performance visual with beat-matched cuts and a heavy grade.",
      "Featured"),
 ]
-
+# Format oe Syntax for Testinomials
+# Testimonals.list() = Testimonial -> Name -> Roles
 TESTIMONIALS = [
     ("Turnaround is fast and the retention on our edits went up immediately. Nathan just gets pacing.",
      "Alex Rivera", "YouTube Creator"),
@@ -73,6 +74,7 @@ TESTIMONIALS = [
      "Priya Raman", "Brand Content Lead"),
     ("Handed over raw footage, got back something better than I imagined. Now my default editor.",
      "Marcus Lee", "Podcast Host"),
+     ("Nathan Cooks for real", "Omonire O. Great", "CEO, Atendex, CEO, Great Tech Solutions")
 ]
 
 

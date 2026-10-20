@@ -1,98 +1,125 @@
-import type { SiteContent } from '../data/site'
+import { site } from '../data/site-content'
+import { images } from '../data/images'
 import { btnGhost, btnGold } from '../lib/ui'
-import { ArrowRightIcon, PlayIcon } from './Icons'
 import { Reveal } from './Reveal'
+import { ArrowRightIcon, StarIcon } from './Icons'
+import { useRef, useState } from 'react'
 
-type HeroProps = {
-  contact: SiteContent['contact']
-  showreel: SiteContent['showreel']
-}
+export function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [videoError, setVideoError] = useState(false)
 
-export function Hero({ contact, showreel }: HeroProps) {
   return (
-    <section id="top" className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden">
-      {/* Showreel background — swap for <video> once an asset exists */}
-      <div
-        className="absolute inset-0 pointer-events-none bg-[radial-gradient(120%_90%_at_70%_10%,#232120_0%,#0c0a09_60%)]"
-        aria-hidden="true"
-      />
-      <div className="bg-grain absolute inset-0 pointer-events-none opacity-60" aria-hidden="true" />
-      <div
-        className="absolute inset-0 bg-linear-to-t from-ink via-ink/60 to-transparent pointer-events-none"
-        aria-hidden="true"
-      />
+    <section id="top" className="relative flex min-h-[100svh] items-center overflow-hidden border-b border-smoke bg-ink">
+      {/* Soft ambient backdrop — blurred clip, fills the wide frame behind everything */}
+      {!videoError && (
+        <>
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+            className="absolute inset-0 size-full scale-125 object-cover opacity-40 blur-3xl pointer-events-none"
+          >
+            <source src="/videos/showreel.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/70 to-ink/40 pointer-events-none" aria-hidden="true" />
+        </>
+      )}
 
-      <div className="container-slick relative z-10 pb-14 pt-32 sm:pb-16 sm:pt-36">
-        <Reveal>
-          <div className="mb-8 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-smoke pb-5">
-            <p className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.3em] text-gold sm:text-xs">
-              <span className="animate-pulse-dot inline-block size-1.5 rounded-full bg-gold" aria-hidden="true" />
-              Available for freelance · YouTube &amp; long-form
+      <div className="container-slick relative z-10 grid w-full items-center gap-12 pb-20 pt-32 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:pb-24 lg:pt-28">
+        <div>
+          <Reveal>
+            <p className="mb-5 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.3em] text-gold sm:text-xs">
+              <span className="inline-block size-1.5 rounded-full bg-gold" aria-hidden="true" />
+              {site.contact.city} · {site.hours.note}
             </p>
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ashtray sm:text-xs">
-              {contact.location}
-            </p>
-          </div>
-        </Reveal>
+          </Reveal>
 
-        {/* Kinetic stacked headline — wits-style alternating solid / stroke / gradient lines */}
-        <h1 className="font-display font-black uppercase leading-[0.82] tracking-tight">
-          <Reveal as="span" className="block">
-            <span className="block text-[clamp(3rem,12vw,9.5rem)] text-bone">Cuts that</span>
+          <Reveal delay={1}>
+            <h1 className="max-w-2xl font-display text-5xl font-black uppercase leading-[0.92] tracking-tight text-bone sm:text-6xl lg:text-7xl">
+              Cuts that hold.
+              <br />
+              <span className="text-gold-gradient">Edits that convert.</span>
+            </h1>
           </Reveal>
-          <Reveal as="span" delay={1} className="block">
-            <span className="block text-[clamp(3rem,12vw,9.5rem)] text-stroke">keep them</span>
-          </Reveal>
-          <Reveal as="span" delay={2} className="block">
-            <span className="text-gold-gradient block text-[clamp(3rem,12vw,9.5rem)]">watching.</span>
-          </Reveal>
-        </h1>
 
-        <div className="mt-10 grid gap-8 border-t border-smoke pt-7 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:gap-12">
           <Reveal delay={2}>
-            <div>
-              <p className="max-w-xl text-base leading-relaxed text-stone-mist sm:text-lg">
-                Video editor &amp; post-production for YouTube creators — pacing, color, sound and motion cut to hold
-                attention from the first frame.
-              </p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <a href="#reel" className={btnGold}>
-                  <PlayIcon className="size-4" />
-                  Watch Showreel
-                </a>
-                <a href="#work" className={btnGhost}>
-                  View Work
-                  <ArrowRightIcon className="size-4" />
-                </a>
-              </div>
+            <p className="mt-6 max-w-md text-base leading-relaxed text-stone-mist sm:text-lg">
+              I edit video for YouTube creators who live or die by retention — the edit, color, sound and motion that
+              keep a viewer watching, then send them to subscribe.
+            </p>
+          </Reveal>
+
+          <Reveal delay={3}>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a href="#book" className={btnGold}>
+                Start a Project
+                <ArrowRightIcon className="size-4" />
+              </a>
+              <a href="#services" className={btnGhost}>
+                View Services
+              </a>
             </div>
           </Reveal>
 
-          {/* wits-style "letter to most important" contact block */}
-          <Reveal delay={3}>
-            <div className="border-l-2 border-gold/70 pl-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ashtray">
-                Send footage to:
-              </p>
-              <a
-                href={`mailto:${contact.email}`}
-                className="mt-1 block cursor-pointer font-display text-lg font-bold uppercase tracking-tight text-bone transition-colors duration-200 hover:text-gold sm:text-xl"
-              >
-                {contact.email}
-              </a>
-              <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.3em] text-ashtray">
-                Reel <span className="text-gold">{showreel.length}</span> · Reply within 24h
-              </p>
+          <Reveal delay={4}>
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-smoke pt-6">
+              <span className="flex items-center gap-2">
+                <span className="flex text-gold" aria-hidden="true">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <StarIcon key={i} className="size-3.5" />
+                  ))}
+                </span>
+                <span className="font-mono text-xs uppercase tracking-widest text-ashtray">
+                  {site.reviewStats.average.toFixed(1)} rated
+                </span>
+              </span>
+              <span className="font-mono text-xs uppercase tracking-widest text-ashtray">Remote · Worldwide</span>
+              <span className="font-mono text-xs uppercase tracking-widest text-ashtray">Edit, color, sound &amp; motion</span>
             </div>
           </Reveal>
         </div>
 
-        <Reveal delay={4}>
-          <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
-            <span className="font-mono text-xs uppercase tracking-widest text-ashtray">Edit · Color · Sound · Motion</span>
-            <span className="font-mono text-xs uppercase tracking-widest text-ashtray">YouTube long-form &amp; shorts</span>
-            <span className="font-mono text-xs uppercase tracking-widest text-ashtray">Fast turnaround</span>
-          </div>
+        {/* Showreel card — plays at native 9:16 so it never upscales/blurs */}
+        <Reveal delay={2} className="order-first lg:order-none">
+          <figure className="relative mx-auto w-full max-w-[260px] sm:max-w-[300px] lg:max-w-[340px]">
+            <div className="relative overflow-hidden rounded-2xl border border-smoke bg-coal shadow-2xl">
+              <div className="relative aspect-[9/16]">
+                {!videoError ? (
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    poster={images.hero}
+                    onError={() => setVideoError(true)}
+                    className="absolute inset-0 size-full object-cover"
+                  >
+                    <source src="/videos/showreel.mp4" type="video/mp4" />
+                  </video>
+                ) : (
+                  <img
+                    src={images.hero}
+                    alt="Showreel preview"
+                    fetchPriority="high"
+                    className="absolute inset-0 size-full object-cover"
+                  />
+                )}
+                <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-ink/80 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-gold backdrop-blur-sm">
+                  <span className="inline-block size-1.5 animate-pulse rounded-full bg-gold" aria-hidden="true" />
+                  Showreel
+                </span>
+              </div>
+            </div>
+            <figcaption className="mt-3 text-center font-mono text-[11px] uppercase tracking-[0.25em] text-ashtray">
+              Recent edit · vertical
+            </figcaption>
+          </figure>
         </Reveal>
       </div>
     </section>

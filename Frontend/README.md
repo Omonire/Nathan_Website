@@ -1,32 +1,50 @@
-# React + TypeScript + Vite
+# Nathan N.O — Video Editor Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Marketing site for **Nathan Nkuma O.**, a video editor & post-production specialist
+("Video editor for YouTube creators"), based in Benin City, Edo State, Nigeria.
 
-Currently, two official plugins are available:
+Built with React + TypeScript + Vite and Tailwind CSS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Sections
 
-## React Compiler
+- **Hero** — brand, tagline, showreel video background
+- **Services & Rates** — editing, color grading, sound design, motion graphics, shorts, thumbnails
+- **Selected Work** — gallery + raw/graded before-after slider
+- **Featured Projects** — case studies that can be pre-selected in the inquiry form
+- **Reviews** — client testimonials
+- **Start a Project** — inquiry form (posts to the backend, falls back to local storage)
+- **Contact** — details, socials and a message form
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting started
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Copy `.env.example` to `.env` to configure the booking API (optional — sensible
+defaults are baked in).
+
+## Scripts
+
+- `npm run dev` — start the dev server
+- `npm run build` — type-check and build for production
+- `npm run lint` — run Oxlint
+- `npm run preview` — preview the production build
+
+## Booking / inquiry API
+
+The inquiry form posts JSON to the Flask backend at
+`https://nathan-portfolio-backend-api.onrender.com/api/bookings`
+(overridable with `VITE_BOOKINGS_API_URL`, or disabled with
+`VITE_BOOKINGS_API=false`). See `../Backend` for the server.
+
+## Admin
+
+A lightweight client-side admin area lives at `/admin` (`/admin/login`). It reads
+bookings from the same API endpoint.
+
+## Notes
+
+- Terms are pulled from `src/data/site-content.ts` and `src/lib/cms.ts`.
+- Gallery imagery uses Pexels URLs in `src/data/images.ts` — swap for real frames.

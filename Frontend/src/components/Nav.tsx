@@ -1,24 +1,17 @@
 import { useEffect, useState } from 'react'
-import type { SiteContent } from '../data/site'
 import { btnGold } from '../lib/ui'
-import { Brand } from './Brand'
+import { Brand } from './brand'
 import { CloseIcon, MenuIcon } from './Icons'
 
 const links = [
-  { href: '#work', label: 'Work' },
-  { href: '#manifesto', label: 'The Split' },
-  { href: '#process', label: 'Process' },
   { href: '#services', label: 'Services' },
-  { href: '#about', label: 'About' },
-  { href: '#reel', label: 'Showreel' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#work', label: 'Work' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#reviews', label: 'Reviews' },
+  { href: '#location', label: 'Contact' },
 ]
 
-type NavProps = {
-  brand: SiteContent['brand']
-}
-
-export function Nav({ brand }: NavProps) {
+export function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -36,8 +29,8 @@ export function Nav({ brand }: NavProps) {
       }`}
     >
       <div className="container-slick flex h-16 items-center justify-between sm:h-20">
-        <a href="#top" className="flex cursor-pointer items-center gap-2.5" aria-label={`${brand.name} — home`}>
-          <Brand brand={brand} />
+        <a href="#top" className="flex cursor-pointer items-center gap-2.5" aria-label="Nathan N.O — Video Editor, home">
+          <Brand />
         </a>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
@@ -53,8 +46,8 @@ export function Nav({ brand }: NavProps) {
         </nav>
 
         <div className="flex items-center gap-3">
-          <a href="#contact" className={`${btnGold} hidden sm:inline-flex`}>
-            Hire Me
+          <a href="#book" className={`${btnGold} hidden sm:inline-flex`}>
+            Start a Project
           </a>
           <button
             type="button"
@@ -82,8 +75,8 @@ export function Nav({ brand }: NavProps) {
                 {l.label}
               </a>
             ))}
-            <a href="#contact" onClick={() => setOpen(false)} className={`${btnGold} mt-5`}>
-              Hire Me
+            <a href="#book" onClick={() => setOpen(false)} className={`${btnGold} mt-5`}>
+              Start a Project
             </a>
           </nav>
         </div>

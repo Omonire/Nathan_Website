@@ -10,7 +10,9 @@ type RevealProps = {
 export function Reveal({ children, className = '', delay, as }: RevealProps) {
   const Tag = (as ?? 'div') as ElementType
   const ref = useRef<HTMLElement | null>(null)
-  const [shown, setShown] = useState(() => typeof IntersectionObserver === 'undefined')
+  const [shown, setShown] = useState(
+    () => typeof IntersectionObserver === 'undefined',
+  )
 
   useEffect(() => {
     const el = ref.current

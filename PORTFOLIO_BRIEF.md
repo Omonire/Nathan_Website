@@ -9,7 +9,7 @@ Fill in answers below. Leave blank to use placeholders.
 - Location/timezone: Benin City, Edo State, Nigeria
 
 ## 2. Showreel
-- Main reel link (Vimeo/YouTube, unlisted fine):https://www.tiktok.com/@skidobanz_fx
+- Main reel link (Vimeo/YouTube, unlisted fine):https://www.tiktok.com/@skidobanz.fx
 - Hero background: (video file / still collage / placeholder): I will provide that
 - Reel length + caption/description: (Create one)
 

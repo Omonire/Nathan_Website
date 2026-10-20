@@ -3,7 +3,7 @@ import secrets
 
 from flask import Blueprint, current_app, jsonify, request
 
-from sqlite import get_db
+from db import get_db
 
 bp = Blueprint("admin", __name__, url_prefix="/api/admin")
 

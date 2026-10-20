@@ -1,10 +1,21 @@
 # Render Blueprint — Nathan N.O portfolio API
 #
-# One service:
+# Two resources:
+#   nathan-portfolio-db  → free PostgreSQL (primary data store)
 #   nathan-portfolio-api → Flask + gunicorn web service (Backend/)
 #
 # The frontend is deployed separately on Vercel (see Frontend/vercel.json).
 # Deploy: Render Dashboard → New → Blueprint → point at this repo.
+#
+# Manual setup instead of Blueprint: create the PostgreSQL instance yourself and
+# add its connection string as the DATABASE_URL env var on the web service.
+
+databases:
+  - name: nathan-portfolio-db
+    plan: free
+    region: oregon
+    databaseName: nathan_portfolio
+    user: nathan
 
 services:
   - type: web
@@ -20,16 +31,16 @@ services:
     envVars:
       - key: FLASK_DEBUG
         value: "0"
+      # PostgreSQL only in production (no local SQLite fallback).
+      - key: SQLITE
+        value: "0"
       # Protects /api/admin/*. Render generates the value — read it in the
       # dashboard (Environment tab) to query admin endpoints with ?token=...
       - key: ADMIN_TOKEN
         generateValue: true
-      # The SQLite file lives on the instance's ephemeral disk, so messages are
-      # cleared on redeploy. To persist, add a disk and uncomment DATABASE_PATH:
-      # disk:
-      #   name: portfolio-data
-      #   mountPath: /var/data
-      #   sizeGB: 1
-      # envVars:
-      #   - key: DATABASE_PATH
-      #     value: /var/data/portfolio.db
+      # Primary database. The API falls back to SQLite automatically if this
+      # is unset or unreachable.
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nathan-portfolio-db
+          property: connectionString
