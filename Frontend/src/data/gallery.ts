@@ -29,5 +29,5 @@ export const gallery: GalleryItem[] = images.gallery.map((g) => ({
 export const beforeAfter = {
   before: images.beforeAfter.before,
   after: images.beforeAfter.after,
-  note: 'Replace with your own before/after grade pair and add your real frames.',
+  note: 'Graded vs. ungraded — same frame, different feel.',
 }
