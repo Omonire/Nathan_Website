@@ -4,6 +4,7 @@ import { fetchBookings, type BookingRecord } from '../lib/booking'
 import { ServiceManager } from './admin/ServiceManager'
 import { CategoryManager } from './admin/CategoryManager'
 import { SiteSettings } from './admin/SiteSettings'
+import { TestimonialManager } from './admin/TestimonialManager'
 import { getHotDeals } from '../lib/cms'
 
 const POLL_MS = 5_000
@@ -321,7 +322,7 @@ function exportToCSV(bookings: BookingRecord[]) {
   URL.revokeObjectURL(url)
 }
 
-type Tab = 'overview' | 'bookings' | 'clients' | 'calendar' | 'services' | 'categories' | 'settings'
+type Tab = 'overview' | 'bookings' | 'clients' | 'calendar' | 'services' | 'categories' | 'testimonials' | 'settings'
 
 export function AdminDashboard() {
   const navigate = useNavigate()
@@ -381,6 +382,7 @@ export function AdminDashboard() {
     { id: 'clients', label: 'Clients', icon: '👥' },
     { id: 'services', label: 'Services', icon: '🎬' },
     { id: 'categories', label: 'Categories', icon: '📂' },
+    { id: 'testimonials', label: 'Testimonials', icon: '💬' },
     { id: 'settings', label: 'Settings', icon: '⚙️' },
   ]
 
@@ -499,6 +501,7 @@ export function AdminDashboard() {
 
             {activeTab === 'services' && <ServiceManager />}
             {activeTab === 'categories' && <CategoryManager />}
+            {activeTab === 'testimonials' && <TestimonialManager />}
             {activeTab === 'settings' && <SiteSettings />}
           </div>
         )}

@@ -18,13 +18,37 @@ function Stars({ count }: { count: number }) {
 
 export function Reviews() {
   const [reviews, setReviews] = useState<Review[]>(site.reviews)
-  
+
   useEffect(() => {
-    const stored = localStorage.getItem('slick_cms_reviews')
-    if (stored) {
+    let active = true
+    async function load() {
       try {
-        setReviews(JSON.parse(stored))
-      } catch {}
+        const stored = localStorage.getItem('slick_cms_reviews')
+        if (stored) {
+          setReviews(JSON.parse(stored))
+          return
+        }
+      } catch {
+        /* ignore */
+      }
+      if (!site.api.enabled) return
+      try {
+        const base = site.api.endpoint.replace(/\/bookings\/?$/, '')
+        const res = await fetch(`${base}/site`)
+        if (!res.ok) return
+        const data = (await res.json()) as { testimonials?: { quote: string; name: string; role: string }[] }
+        if (active && data.testimonials?.length) {
+          setReviews(
+            data.testimonials.map((t, i) => ({ name: t.name, service: t.role || 'Client', quote: t.quote, rating: 5, id: i })),
+          )
+        }
+      } catch {
+        /* keep static fallback */
+      }
+    }
+    load()
+    return () => {
+      active = false
     }
   }, [])
 
