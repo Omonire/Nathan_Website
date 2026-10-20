@@ -3,31 +3,21 @@ import { images } from '../data/images'
 import { btnGhost, btnGold } from '../lib/ui'
 import { Reveal } from './Reveal'
 import { ArrowRightIcon, StarIcon } from './Icons'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
 export function Hero() {
-  const videoRef = useRef<HTMLVideoElement>(null)
   const [videoError, setVideoError] = useState(false)
 
   return (
     <section id="top" className="relative flex min-h-[100svh] items-center overflow-hidden border-b border-smoke bg-ink">
-      {/* Soft ambient backdrop — blurred clip, fills the wide frame behind everything */}
-      {!videoError && (
-        <>
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-            className="absolute inset-0 size-full scale-125 object-cover opacity-40 blur-3xl pointer-events-none"
-          >
-            <source src="/videos/showreel.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/70 to-ink/40 pointer-events-none" aria-hidden="true" />
-        </>
-      )}
+      {/* Soft ambient backdrop — static blurred poster, avoids a second video decoder */}
+      <img
+        src={images.hero}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 size-full scale-125 object-cover opacity-40 blur-3xl pointer-events-none"
+      />
+      <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/70 to-ink/40 pointer-events-none" aria-hidden="true" />
 
       <div className="container-slick relative z-10 grid w-full items-center gap-12 pb-20 pt-32 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:pb-24 lg:pt-28">
         <div>
@@ -90,7 +80,6 @@ export function Hero() {
               <div className="relative aspect-[9/16]">
                 {!videoError ? (
                   <video
-                    ref={videoRef}
                     autoPlay
                     loop
                     muted

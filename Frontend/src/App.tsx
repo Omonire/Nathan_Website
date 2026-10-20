@@ -4,6 +4,7 @@ import { Marquee } from './components/Marquee'
 import { Services } from './components/Services'
 import { OurWork } from './components/OurWork'
 import { Projects } from './components/Projects'
+import { About } from './components/About'
 import { WhySlicks } from './components/WhySlicks'
 import { Reviews } from './components/Reviews'
 import { Booking } from './components/Booking'
@@ -22,6 +23,7 @@ function App() {
         <Services />
         <OurWork />
         <Projects />
+        <About />
         <WhySlicks />
         <Reviews />
         <Booking />

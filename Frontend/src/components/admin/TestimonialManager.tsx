@@ -21,16 +21,25 @@ export function TestimonialManager() {
   const [form, setForm] = useState<Form>(emptyForm)
   const [saving, setSaving] = useState(false)
 
-  async function load() {
-    setLoading(true)
+  useEffect(() => {
+    let active = true
+    async function init() {
+      const data = await fetchTestimonials()
+      if (active) {
+        setItems(data)
+        setLoading(false)
+      }
+    }
+    init()
+    return () => {
+      active = false
+    }
+  }, [])
+
+  async function reload() {
     const data = await fetchTestimonials()
     setItems(data)
-    setLoading(false)
   }
-
-  useEffect(() => {
-    load()
-  }, [])
 
   function openNew() {
     setEditing(null)
@@ -62,7 +71,7 @@ export function TestimonialManager() {
     setShowForm(false)
     setEditing(null)
     setForm(emptyForm)
-    load()
+    reload()
   }
 
   async function handleDelete(id: number) {

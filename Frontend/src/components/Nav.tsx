@@ -4,9 +4,9 @@ import { Brand } from './brand'
 import { CloseIcon, MenuIcon } from './Icons'
 
 const links = [
-  { href: '#services', label: 'Services' },
   { href: '#work', label: 'Work' },
   { href: '#projects', label: 'Projects' },
+  { href: '#about', label: 'About' },
   { href: '#reviews', label: 'Reviews' },
   { href: '#location', label: 'Contact' },
 ]

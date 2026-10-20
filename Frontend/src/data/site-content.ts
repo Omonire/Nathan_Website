@@ -28,6 +28,13 @@ const brand = {
   tagline: 'Edits that hold. Stories that convert.',
 }
 
+  const about = {
+    bio: 'I edit video for YouTube creators who live or die by retention. Every edit, transition and beat of sound design is there to keep a viewer from leaving — then to make them hit subscribe. From raw footage to final upload, I handle the edit, color, sound and motion.',
+    years: '5+',
+    tools: ['Premiere Pro', 'DaVinci Resolve', 'After Effects', 'Audition'],
+    clients: ['Creator Studio', 'Independent Channels', 'Brand Campaigns'],
+  }
+
 const services: Service[] = [
   {
     id: 'video-editing',
@@ -155,6 +162,7 @@ const api = {
 
 export const site = {
   brand,
+  about,
   services,
   projects,
   hours,
