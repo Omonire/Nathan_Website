@@ -38,7 +38,7 @@ export function Footer() {
           <div>
             <Brand />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ashtray">
-              Cuts that hold, edits that convert. {site.brand.name} — video editing and post-production for YouTube
+              Edits that hold, stories that convert. {site.brand.name} — video editing and post-production for YouTube
               creators, based in {site.contact.city}.
             </p>
           </div>

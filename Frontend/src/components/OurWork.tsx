@@ -110,7 +110,7 @@ export function OurWork() {
               Proof, not <span className="text-gold-gradient">promises.</span>
             </>
           }
-          sub="A look at the edits, grades, and verticals going out the door — cut for retention, finished for the feed."
+          sub="A look at the edits, grades, and verticals going out the door — paced for retention, finished for the feed."
         />
 
         <Reveal delay={1}>

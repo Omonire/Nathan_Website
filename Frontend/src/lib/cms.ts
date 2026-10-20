@@ -76,7 +76,7 @@ const defaultSiteContent: SiteContent = {
     name: 'Nathan N.O',
     studio: 'Video Editor',
     city: 'Benin City, Nigeria',
-    tagline: 'Cuts that hold. Edits that convert.',
+    tagline: 'Edits that hold. Stories that convert.',
   },
   hours: {
     days: 'Reply within 24 hours',

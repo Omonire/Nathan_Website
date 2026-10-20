@@ -25,7 +25,7 @@ const brand = {
   name: 'Nathan N.O',
   studio: 'Video Editor',
   city: 'Benin City, Nigeria',
-  tagline: 'Cuts that hold. Edits that convert.',
+  tagline: 'Edits that hold. Stories that convert.',
 }
 
 const services: Service[] = [
@@ -78,7 +78,7 @@ const services: Service[] = [
 const projects: Project[] = [
   {
     id: 'project-1',
-    name: 'The Retention Cut',
+    name: 'The Retention Edit',
     specialty: 'Long-Form · Edit & Sound',
     bio: 'A 14-minute documentary-style video rebuilt around retention — cutting dead air and reinforcing every hook. Avg. watch time rose 38%.',
   },
@@ -123,7 +123,7 @@ const reviewStats = { average: 5.0, count: '47' }
 const reviews: Review[] = [
   {
     name: 'Omonire O.',
-    service: 'The Retention Cut',
+    service: 'The Retention Edit',
     quote: 'Turnaround is fast and the retention on our edits went up immediately. Nathan just gets pacing.',
     rating: 5,
   },

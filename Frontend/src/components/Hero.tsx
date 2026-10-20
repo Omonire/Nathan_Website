@@ -40,9 +40,9 @@ export function Hero() {
 
           <Reveal delay={1}>
             <h1 className="max-w-2xl font-display text-5xl font-black uppercase leading-[0.92] tracking-tight text-bone sm:text-6xl lg:text-7xl">
-              Cuts that hold.
+              Edits that hold.
               <br />
-              <span className="text-gold-gradient">Edits that convert.</span>
+              <span className="text-gold-gradient">Stories that convert.</span>
             </h1>
           </Reveal>
 

@@ -6,7 +6,7 @@ const pillars = [
   {
     icon: FilmIcon,
     title: 'Retention-First Editing',
-    body: 'Every cut, transition and beat of sound design is there to keep a viewer watching — then to make them subscribe.',
+    body: 'Every edit, transition and beat of sound design is there to keep a viewer watching — then to make them subscribe.',
   },
   {
     icon: DiamondIcon,
@@ -21,7 +21,7 @@ const pillars = [
   {
     icon: CalendarIcon,
     title: 'Easy To Start',
-    body: 'Send your footage, pick your deliverables, and get a first cut back. Simple, remote, worldwide.',
+    body: 'Send your footage, pick your deliverables, and get a first edit back. Simple, remote, worldwide.',
   },
 ]
 

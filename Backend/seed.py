@@ -8,12 +8,12 @@ SITE_DEFAULTS = {
     },
     "showreel": {
         "url": "",
-        "caption": "A minute of cuts, color and sound \u2014 the reel that says it faster than a bio.",
+        "caption": "A minute of edits, color and sound \u2014 the reel that says it faster than a bio.",
         "length": "01:20",
     },
     "about": {
         "bio": (
-            "I edit video for YouTube creators who live or die by retention. Every cut, "
+            "I edit video for YouTube creators who live or die by retention. Every edit, "
             "transition and beat of sound design is there to keep a viewer from leaving \u2014 "
             "then to make them hit subscribe. From raw footage to final upload, I handle the "
             "edit, color, sound and motion."
@@ -44,7 +44,7 @@ SERVICES = [
 ]
 
 PROJECTS = [
-    ("retention-edit", "The Retention Cut", "Creator Studio", "2025", "Long-Form", "Edit \u00b7 Color \u00b7 Sound", "",
+    ("retention-edit", "The Retention Edit", "Creator Studio", "2025", "Long-Form", "Edit \u00b7 Color \u00b7 Sound", "",
      "A 14-minute documentary-style video rebuilt around retention, cutting dead air and reinforcing every hook.",
      "Avg. watch time +38%"),
     ("brand-film", "Brand Film \u2014 Northline", "Northline", "2025", "Brand", "Edit \u00b7 Motion", "",
