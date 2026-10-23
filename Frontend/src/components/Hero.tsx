@@ -1,4 +1,5 @@
 import { site } from '../data/site-content'
+import { useSite } from '../lib/site-context'
 import { images } from '../data/images'
 import { btnGhost, btnGold } from '../lib/ui'
 import { Reveal } from './Reveal'
@@ -6,6 +7,7 @@ import { ArrowRightIcon, StarIcon } from './Icons'
 import { useState } from 'react'
 
 export function Hero() {
+  const { content } = useSite()
   const [videoError, setVideoError] = useState(false)
 
   return (
@@ -24,7 +26,7 @@ export function Hero() {
           <Reveal>
             <p className="mb-5 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.3em] text-gold sm:text-xs">
               <span className="inline-block size-1.5 rounded-full bg-gold" aria-hidden="true" />
-              {site.contact.city} · {site.hours.note}
+              {content.contact.city} · {content.hours.note}
             </p>
           </Reveal>
 

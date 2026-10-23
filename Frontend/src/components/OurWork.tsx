@@ -4,6 +4,8 @@ import { SectionHeading } from './SectionHeading'
 import { Reveal } from './Reveal'
 import { BeforeAfter } from './BeforeAfter'
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from './Icons'
+import { Nav } from './Nav'
+import { Footer } from './Footer'
 
 type Filter = GalleryCategory | 'all'
 
@@ -83,6 +85,18 @@ function Lightbox({
       >
         <CloseIcon />
       </button>
+    </div>
+  )
+}
+
+export function WorkPage() {
+  return (
+    <div className="bg-ink text-bone">
+      <Nav />
+      <main className="pt-20">
+        <OurWork />
+      </main>
+      <Footer />
     </div>
   )
 }

@@ -1,7 +1,10 @@
-import { site } from '../data/site-content'
+import { API_BASE } from '../lib/admin-auth'
+import { useSite } from '../lib/site-context'
 import { SectionHeading } from './SectionHeading'
 import { Reveal } from './Reveal'
 import { ClockIcon, PhoneIcon, PinIcon, TikTokIcon, YouTubeIcon } from './Icons'
+import { Nav } from './Nav'
+import { Footer } from './Footer'
 import type { JSX } from 'react'
 import { useState } from 'react'
 
@@ -10,18 +13,51 @@ const socialIcons: Record<string, (props: { className?: string }) => JSX.Element
   TikTok: TikTokIcon,
 }
 
+export function ContactPage() {
+  return (
+    <div className="bg-ink text-bone">
+      <Nav />
+      <main className="pt-20">
+        <Contact />
+      </main>
+      <Footer />
+    </div>
+  )
+}
+
 export function Contact() {
+  const { content } = useSite()
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' })
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [reference, setReference] = useState('')
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setStatus('sending')
-    // Simulate sending (connect to email API in production)
-    await new Promise(r => setTimeout(r, 1500))
-    setStatus('sent')
-    setFormData({ name: '', email: '', phone: '', message: '' })
-    setTimeout(() => setStatus('idle'), 3000)
+    try {
+      const res = await fetch(`${API_BASE}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+        }),
+      })
+      const data = res.ok ? ((await res.json()) as { reference?: string }) : null
+      if (!res.ok || !data) {
+        setStatus('error')
+        setTimeout(() => setStatus('idle'), 4000)
+        return
+      }
+      setReference(data.reference ?? '')
+      setStatus('sent')
+      setFormData({ name: '', email: '', phone: '', message: '' })
+      setTimeout(() => setStatus('idle'), 6000)
+    } catch {
+      setStatus('error')
+      setTimeout(() => setStatus('idle'), 4000)
+    }
   }
 
   return (
@@ -44,11 +80,11 @@ export function Contact() {
                 <PinIcon className="mt-0.5 shrink-0 text-gold" />
                 <div>
                   <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-ashtray">Based in</h3>
-                  <p className="mt-2 font-display text-lg font-bold text-bone">{site.brand.name} · {site.brand.studio}</p>
+                  <p className="mt-2 font-display text-lg font-bold text-bone">{content.brand.name} · {content.brand.studio}</p>
                   <p className="mt-1 text-sm leading-relaxed text-ashtray">
-                    {site.contact.address}
+                    {content.contact.address}
                     <br />
-                    {site.contact.addressLine2}
+                    {content.contact.addressLine2}
                   </p>
                 </div>
               </div>
@@ -59,15 +95,15 @@ export function Contact() {
                   <div>
                     <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-ashtray">Availability</h3>
                     <p className="mt-2 text-sm text-bone">
-                      {site.hours.days}
+                      {content.hours.days}
                     </p>
                     <p className="text-sm text-ashtray">
-                      {site.hours.open} – {site.hours.close}
+                      {content.hours.open} – {content.hours.close}
                     </p>
                   </div>
                   <div className="sm:text-left">
                     <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-ashtray">Status</h3>
-                    <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-gold">{site.hours.note}</p>
+                    <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-gold">{content.hours.note}</p>
                   </div>
                 </div>
               </div>
@@ -76,11 +112,11 @@ export function Contact() {
                 <PhoneIcon className="mt-0.5 shrink-0 text-gold" />
                 <div>
                   <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-ashtray">Reach out</h3>
-                  <a href={`tel:${site.contact.phone.replace(/[^+\d]/g, '')}`} className="mt-2 block cursor-pointer text-sm text-bone underline-offset-4 transition-colors hover:text-gold">
-                    {site.contact.phone}
+                  <a href={`tel:${content.contact.phone.replace(/[^+\d]/g, '')}`} className="mt-2 block cursor-pointer text-sm text-bone underline-offset-4 transition-colors hover:text-gold">
+                    {content.contact.phone}
                   </a>
-                  <a href={`mailto:${site.contact.email}`} className="mt-1 block cursor-pointer text-sm text-ashtray underline-offset-4 transition-colors hover:text-gold">
-                    {site.contact.email}
+                  <a href={`mailto:${content.contact.email}`} className="mt-1 block cursor-pointer text-sm text-ashtray underline-offset-4 transition-colors hover:text-gold">
+                    {content.contact.email}
                   </a>
                 </div>
               </div>
@@ -89,7 +125,7 @@ export function Contact() {
                 <div>
                   <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-ashtray">Follow the work</h3>
                   <div className="mt-3 flex gap-3">
-                    {site.socials.map((s) => {
+                    {content.socials.map((s) => {
                       const Icon = socialIcons[s.label] ?? YouTubeIcon
                       return (
                         <a
@@ -168,7 +204,19 @@ export function Contact() {
                   {status === 'sending' ? 'Sending...' : status === 'sent' ? '✓ Sent!' : 'Send Message'}
                 </button>
                 {status === 'sent' && (
-                  <p className="text-center text-sm text-green-400">Message sent! I'll get back to you soon.</p>
+                  <p className="text-center text-sm text-green-400">
+                    Message sent! I'll get back to you soon.
+                    {reference && (
+                      <span className="mt-1 block font-mono text-[10px] uppercase tracking-[0.2em] text-ashtray">
+                        Reference: {reference}
+                      </span>
+                    )}
+                  </p>
+                )}
+                {status === 'error' && (
+                  <p className="text-center text-sm text-red-400">
+                    Couldn't send right now — email {content.contact.email} instead.
+                  </p>
                 )}
               </form>
             </div>

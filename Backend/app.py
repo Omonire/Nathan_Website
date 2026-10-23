@@ -37,12 +37,25 @@ def _kv(conn, key, default=None):
         return default
 
 
-def _services(conn):
-    rows = conn.execute("SELECT * FROM services ORDER BY sort_order").fetchall()
-    return [
-        {"index": r["idx"], "name": r["name"], "description": r["description"], "detail": r["detail"]}
-        for r in rows
-    ]
+def _service_row(r):
+    return {
+        "id": r["idx"],
+        "name": r["name"],
+        "description": r["description"],
+        "price": r["price"],
+        "duration": r["detail"],
+        "category": r["category"],
+        "hotDeal": bool(r["hot_deal"]),
+        "active": bool(r["active"]),
+    }
+
+
+def _services(conn, active_only=False):
+    sql = "SELECT * FROM services"
+    if active_only:
+        sql += " WHERE active = 1"
+    sql += " ORDER BY sort_order"
+    return [_service_row(r) for r in conn.execute(sql).fetchall()]
 
 
 def _projects(conn):
@@ -53,6 +66,32 @@ def _projects(conn):
 def _testimonials(conn):
     rows = conn.execute("SELECT * FROM testimonials ORDER BY sort_order").fetchall()
     return [{"quote": r["quote"], "name": r["name"], "role": r["role"]} for r in rows]
+
+
+def _post_row(row, full=True):
+    data = {
+        "id": row["id"],
+        "slug": row["slug"],
+        "title": row["title"],
+        "excerpt": row["excerpt"],
+        "cover": row["cover"],
+        "tag": row["tag"],
+        "author": row["author"],
+        "status": row["status"],
+        "publishedAt": row["published_at"],
+    }
+    if full:
+        data["body"] = row["body"]
+    return data
+
+
+def _posts(conn, published_only=False):
+    sql = "SELECT * FROM posts"
+    if published_only:
+        sql += " WHERE status = 'published'"
+    sql += " ORDER BY published_at DESC, id DESC"
+    rows = conn.execute(sql).fetchall()
+    return [_post_row(r, full=False) for r in rows]
 
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -88,7 +127,7 @@ def create_app():
     try:
         from flask_cors import CORS
 
-        CORS(app, resources={r"/api/*": {"origins": "*"}})
+        CORS(app, resources={r"/*": {"origins": "*"}})
     except ImportError:
         pass
 
@@ -115,8 +154,9 @@ def create_app():
                 "showreel": _kv(conn, "showreel", {}),
                 "about": _kv(conn, "about", {}),
                 "contact": _kv(conn, "contact", {}),
+                "hours": _kv(conn, "hours", {}),
                 "socials": _kv(conn, "socials", []),
-                "services": _services(conn),
+                "services": _services(conn, active_only=True),
                 "testimonials": _testimonials(conn),
             }
         finally:
@@ -142,6 +182,28 @@ def create_app():
         if row is None:
             return jsonify({"error": "Project not found"}), 404
         return jsonify(_project_row(row))
+
+    @app.get("/api/posts")
+    def posts():
+        conn = get_db()
+        try:
+            data = _posts(conn, published_only=True)
+        finally:
+            conn.close()
+        return jsonify(data)
+
+    @app.get("/api/posts/<slug>")
+    def post(slug):
+        conn = get_db()
+        try:
+            row = conn.execute(
+                "SELECT * FROM posts WHERE slug = ? AND status = 'published'", (slug,)
+            ).fetchone()
+        finally:
+            conn.close()
+        if row is None:
+            return jsonify({"error": "Post not found"}), 404
+        return jsonify(_post_row(row))
 
     @app.post("/api/contact")
     def contact():

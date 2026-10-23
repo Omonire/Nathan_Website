@@ -21,6 +21,10 @@ CREATE TABLE IF NOT EXISTS services (
     name        TEXT    NOT NULL,
     description TEXT    NOT NULL,
     detail      TEXT    NOT NULL,
+    price       TEXT    NOT NULL DEFAULT '',
+    category    TEXT    NOT NULL DEFAULT 'editing',
+    hot_deal    INTEGER NOT NULL DEFAULT 0,
+    active      INTEGER NOT NULL DEFAULT 1,
     sort_order  INTEGER NOT NULL DEFAULT 0
 );
 
@@ -44,6 +48,20 @@ CREATE TABLE IF NOT EXISTS testimonials (
     name       TEXT    NOT NULL,
     role       TEXT    NOT NULL,
     sort_order INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS posts (
+    id           SERIAL    PRIMARY KEY,
+    slug         TEXT      NOT NULL UNIQUE,
+    title        TEXT      NOT NULL,
+    excerpt      TEXT      NOT NULL DEFAULT '',
+    body         TEXT      NOT NULL DEFAULT '',
+    cover        TEXT      NOT NULL DEFAULT '',
+    tag          TEXT      NOT NULL DEFAULT '',
+    author       TEXT      NOT NULL DEFAULT 'Nathan Nkuma O.',
+    status       TEXT      NOT NULL DEFAULT 'draft',
+    published_at TIMESTAMP NOT NULL DEFAULT now(),
+    created_at   TIMESTAMP NOT NULL DEFAULT now()
 );
 
 CREATE TABLE IF NOT EXISTS messages (
@@ -73,6 +91,14 @@ CREATE TABLE IF NOT EXISTS bookings (
 
 CREATE INDEX IF NOT EXISTS bookings_date_idx   ON bookings (booking_date);
 CREATE INDEX IF NOT EXISTS bookings_status_idx ON bookings (status);
+"""
+
+# Columns added after the first release; `IF NOT EXISTS` keeps re-runs safe.
+MIGRATION = """
+ALTER TABLE services ADD COLUMN IF NOT EXISTS price       TEXT    NOT NULL DEFAULT '';
+ALTER TABLE services ADD COLUMN IF NOT EXISTS category    TEXT    NOT NULL DEFAULT 'editing';
+ALTER TABLE services ADD COLUMN IF NOT EXISTS hot_deal    INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE services ADD COLUMN IF NOT EXISTS active      INTEGER NOT NULL DEFAULT 1;
 """
 
 

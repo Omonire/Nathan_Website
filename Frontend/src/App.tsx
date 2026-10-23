@@ -2,13 +2,12 @@ import { Nav } from './components/Nav'
 import { Hero } from './components/Hero'
 import { Marquee } from './components/Marquee'
 import { Services } from './components/Services'
-import { OurWork } from './components/OurWork'
+
 import { Projects } from './components/Projects'
 import { About } from './components/About'
 import { WhySlicks } from './components/WhySlicks'
 import { Reviews } from './components/Reviews'
 import { Booking } from './components/Booking'
-import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { MobileBookBar } from './components/MobileBookBar'
 import { Splash } from './components/Splash'
@@ -21,13 +20,11 @@ function App() {
         <Hero />
         <Marquee />
         <Services />
-        <OurWork />
         <Projects />
         <About />
         <WhySlicks />
         <Reviews />
         <Booking />
-        <Contact />
       </main>
       <Footer />
       <MobileBookBar />

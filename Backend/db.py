@@ -35,6 +35,7 @@ def get_db():
 def init_db(conn):
     if isinstance(conn, postregsql.Connection):
         conn.executescript(postregsql.SCHEMA)
+        conn.executescript(postregsql.MIGRATION)
         conn.commit()
     else:
         _sqlite_init_db(conn)

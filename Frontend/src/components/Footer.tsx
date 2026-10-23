@@ -1,5 +1,6 @@
-import { site } from '../data/site-content'
+import { useSite } from '../lib/site-context'
 import { btnGold } from '../lib/ui'
+import { Link } from 'react-router-dom'
 import { Brand } from './brand'
 import { Reveal } from './Reveal'
 import { TikTokIcon, YouTubeIcon } from './Icons'
@@ -11,14 +12,16 @@ const socialIcons: Record<string, (props: { className?: string }) => JSX.Element
 }
 
 const navLinks = [
-  { href: '#services', label: 'Services' },
-  { href: '#work', label: 'Selected Work' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#reviews', label: 'Reviews' },
-  { href: '#location', label: 'Contact' },
+  { href: '/#services', label: 'Services' },
+  { href: '/work', label: 'Selected Work' },
+  { href: '/#projects', label: 'Projects' },
+  { href: '/#reviews', label: 'Reviews' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/contact', label: 'Contact' },
 ]
 
 export function Footer() {
+  const { content } = useSite()
   const year = new Date().getFullYear()
   return (
     <footer className="border-t border-smoke bg-coal">
@@ -27,7 +30,7 @@ export function Footer() {
           <h2 className="font-display text-4xl font-black uppercase leading-[0.95] tracking-tight text-bone sm:text-6xl">
             Let's make it <span className="text-gold-gradient">convert.</span>
           </h2>
-          <a href="#book" className={btnGold}>
+          <a href="/#book" className={btnGold}>
             Start a Project
           </a>
         </div>
@@ -38,8 +41,8 @@ export function Footer() {
           <div>
             <Brand />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ashtray">
-              Edits that hold, stories that convert. {site.brand.name} — video editing and post-production for YouTube
-              creators, based in {site.contact.city}.
+              Edits that hold, stories that convert. {content.brand.name} — video editing and post-production for YouTube
+              creators, based in {content.contact.city}.
             </p>
           </div>
 
@@ -48,9 +51,15 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5">
               {navLinks.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} className="cursor-pointer text-sm text-stone-mist transition-colors hover:text-gold">
-                    {l.label}
-                  </a>
+                  {l.href.includes('#') ? (
+                    <a href={l.href} className="cursor-pointer text-sm text-stone-mist transition-colors hover:text-gold">
+                      {l.label}
+                    </a>
+                  ) : (
+                    <Link to={l.href} className="cursor-pointer text-sm text-stone-mist transition-colors hover:text-gold">
+                      {l.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -58,23 +67,23 @@ export function Footer() {
 
           <div>
             <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-ashtray">Availability</h3>
-            <p className="mt-4 text-sm text-bone">{site.hours.days}</p>
+            <p className="mt-4 text-sm text-bone">{content.hours.days}</p>
             <p className="mt-1 text-sm text-ashtray">
-              {site.hours.open} – {site.hours.close}
+              {content.hours.open} – {content.hours.close}
             </p>
-            <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-gold">{site.hours.note}</p>
+            <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-gold">{content.hours.note}</p>
           </div>
 
           <div>
             <h3 className="font-mono text-[11px] uppercase tracking-[0.25em] text-ashtray">Contact</h3>
-            <p className="mt-4 text-sm text-stone-mist">{site.contact.address}</p>
-            <p className="mt-1 text-sm text-ashtray">{site.contact.addressLine2}</p>
-            <p className="mt-3 text-sm text-stone-mist">{site.contact.phone}</p>
+            <p className="mt-4 text-sm text-stone-mist">{content.contact.address}</p>
+            <p className="mt-1 text-sm text-ashtray">{content.contact.addressLine2}</p>
+            <p className="mt-3 text-sm text-stone-mist">{content.contact.phone}</p>
             <a
-              href={`mailto:${site.contact.email}`}
+              href={`mailto:${content.contact.email}`}
               className="mt-1 inline-block cursor-pointer text-sm text-bone transition-colors hover:text-gold"
             >
-              {site.contact.email}
+              {content.contact.email}
             </a>
           </div>
         </div>
@@ -82,10 +91,9 @@ export function Footer() {
 
       <div className="container-slick flex flex-col items-center justify-between gap-4 py-7 sm:flex-row">
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ashtray">
-          © {year} {site.brand.name} · {site.brand.studio}
+          © {year} {content.brand.name} · {content.brand.studio}
         </p>
-        <div className="flex items-center gap-3">
-          {site.socials.map((s) => {
+        <div className="flex items-center gap-3">              {content.socials.map((s) => {
             const Icon = socialIcons[s.label] ?? YouTubeIcon
             return (
               <a

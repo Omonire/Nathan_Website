@@ -1,15 +1,22 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { btnGold } from '../lib/ui'
 import { Brand } from './brand'
 import { CloseIcon, MenuIcon } from './Icons'
 
 const links = [
-  { href: '#work', label: 'Work' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#about', label: 'About' },
-  { href: '#reviews', label: 'Reviews' },
-  { href: '#location', label: 'Contact' },
+  { href: '/work', label: 'Work' },
+  { href: '/#projects', label: 'Projects' },
+  { href: '/#about', label: 'About' },
+  { href: '/#reviews', label: 'Reviews' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/contact', label: 'Contact' },
 ]
+
+// Plain routes render as router Links; hash links stay native anchors so the
+// browser scrolls after loading (works from /blog pages too, since they target
+// /#section and the homepage sections actually exist there).
+const isRoute = (href: string) => !href.includes('#')
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false)
@@ -29,24 +36,34 @@ export function Nav() {
       }`}
     >
       <div className="container-slick flex h-16 items-center justify-between sm:h-20">
-        <a href="#top" className="flex cursor-pointer items-center gap-2.5" aria-label="Nathan N.O — Video Editor, home">
+        <a href="/#top" className="flex cursor-pointer items-center gap-2.5" aria-label="Nathan N.O — Video Editor, home">
           <Brand />
         </a>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="cursor-pointer text-sm font-medium text-stone-mist transition-colors duration-200 hover:text-gold"
-            >
-              {l.label}
-            </a>
-          ))}
+          {links.map((l) =>
+            isRoute(l.href) ? (
+              <Link
+                key={l.href}
+                to={l.href}
+                className="cursor-pointer text-sm font-medium text-stone-mist transition-colors duration-200 hover:text-gold"
+              >
+                {l.label}
+              </Link>
+            ) : (
+              <a
+                key={l.href}
+                href={l.href}
+                className="cursor-pointer text-sm font-medium text-stone-mist transition-colors duration-200 hover:text-gold"
+              >
+                {l.label}
+              </a>
+            ),
+          )}
         </nav>
 
         <div className="flex items-center gap-3">
-          <a href="#book" className={`${btnGold} hidden sm:inline-flex`}>
+          <a href="/#book" className={`${btnGold} hidden sm:inline-flex`}>
             Start a Project
           </a>
           <button
@@ -65,17 +82,28 @@ export function Nav() {
       {open ? (
         <div className="border-t border-smoke bg-ink lg:hidden">
           <nav className="container-slick flex flex-col py-4" aria-label="Mobile">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="cursor-pointer border-b border-smoke/60 py-3.5 font-display text-base font-semibold uppercase tracking-wide text-bone transition-colors hover:text-gold"
-              >
-                {l.label}
-              </a>
-            ))}
-            <a href="#book" onClick={() => setOpen(false)} className={`${btnGold} mt-5`}>
+            {links.map((l) =>
+              isRoute(l.href) ? (
+                <Link
+                  key={l.href}
+                  to={l.href}
+                  onClick={() => setOpen(false)}
+                  className="cursor-pointer border-b border-smoke/60 py-3.5 font-display text-base font-semibold uppercase tracking-wide text-bone transition-colors hover:text-gold"
+                >
+                  {l.label}
+                </Link>
+              ) : (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  className="cursor-pointer border-b border-smoke/60 py-3.5 font-display text-base font-semibold uppercase tracking-wide text-bone transition-colors hover:text-gold"
+                >
+                  {l.label}
+                </a>
+              ),
+            )}
+            <a href="/#book" onClick={() => setOpen(false)} className={`${btnGold} mt-5`}>
               Start a Project
             </a>
           </nav>

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { site } from '../data/site-content'
+import { useSite } from '../lib/site-context'
 import { submitBooking, type BookingPayload, type Preselect } from '../lib/booking'
 import { dayLabel, generateSlots, to12h, toISODate, nextDays } from '../lib/dates'
 import { btnGold, errCls, fieldCls, labelCls } from '../lib/ui'
@@ -32,6 +33,7 @@ const emptyForm: FormState = {
 }
 
 export function Booking() {
+  const { services, projects, content } = useSite()
   const [form, setForm] = useState<FormState>(emptyForm)
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({})
   const [status, setStatus] = useState<Status>('idle')
@@ -50,14 +52,14 @@ export function Booking() {
       setForm((f) => ({
         ...f,
         serviceId:
-          detail.serviceId && site.services.some((s) => s.id === detail.serviceId) ? detail.serviceId : f.serviceId,
+          detail.serviceId && services.some((s) => s.id === detail.serviceId) ? detail.serviceId : f.serviceId,
         barberId:
-          detail.barberId && site.projects.some((b) => b.id === detail.barberId) ? detail.barberId : f.barberId,
+          detail.barberId && projects.some((b) => b.id === detail.barberId) ? detail.barberId : f.barberId,
       }))
     }
     window.addEventListener('slick:preselect', handler)
     return () => window.removeEventListener('slick:preselect', handler)
-  }, [])
+  }, [services, projects])
 
   const set = <K extends keyof FormState>(key: K, value: FormState[K]) => {
     setForm((f) => ({ ...f, [key]: value }))
@@ -107,8 +109,8 @@ export function Booking() {
     setStatus('idle')
   }
 
-  const serviceName = site.services.find((s) => s.id === form.serviceId)?.name
-  const barberName = site.projects.find((b) => b.id === form.barberId)?.name
+  const serviceName = services.find((s) => s.id === form.serviceId)?.name
+  const barberName = projects.find((b) => b.id === form.barberId)?.name
   const dateLabel = form.date ? dayLabel(new Date(`${form.date}T00:00:00`)) : ''
   const timeLabel = form.time ? to12h(form.time) : ''
 
@@ -133,9 +135,9 @@ export function Booking() {
                 <div>
                   <h3 className="font-display text-lg font-bold uppercase text-bone">Availability</h3>
                   <p className="mt-1 text-sm text-ashtray">
-                    {site.hours.days} · {site.hours.open} – {site.hours.close}
+                    {content.hours.days} · {content.hours.open} – {content.hours.close}
                   </p>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-gold">{site.hours.note}</p>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-gold">{content.hours.note}</p>
                 </div>
               </div>
               <div className="flex items-start gap-4 bg-coal p-6">
@@ -151,7 +153,7 @@ export function Booking() {
                 <PhoneIcon className="mt-0.5 shrink-0 text-gold" />
                 <div>
                   <h3 className="font-display text-lg font-bold uppercase text-bone">Prefer to talk?</h3>
-                  <p className="mt-1 text-sm text-ashtray">{site.contact.phone}</p>
+                  <p className="mt-1 text-sm text-ashtray">{content.contact.phone}</p>
                 </div>
               </div>
             </aside>
@@ -203,7 +205,7 @@ export function Booking() {
                       onChange={(e) => set('serviceId', e.target.value)}
                     >
                       <option value="">Select a service</option>
-                      {site.services.map((s) => (
+                      {services.map((s) => (
                         <option key={s.id} value={s.id}>
                           {s.name} — {s.duration}
                         </option>
@@ -223,7 +225,7 @@ export function Booking() {
                       onChange={(e) => set('barberId', e.target.value)}
                     >
                       <option value="">Not sure yet / a new project</option>
-                      {site.projects.map((b) => (
+                      {projects.map((b) => (
                         <option key={b.id} value={b.id}>
                           {b.name} — {b.specialty}
                         </option>

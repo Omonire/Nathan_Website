@@ -1,11 +1,12 @@
 import { images } from '../data/images'
-import { site } from '../data/site-content'
 import { preselectBooking } from '../lib/booking'
+import { useSite } from '../lib/site-context'
 import { btnSm } from '../lib/ui'
 import { SectionHeading } from './SectionHeading'
 import { Reveal } from './Reveal'
 
 export function Projects() {
+  const { projects } = useSite()
   return (
     <section id="projects" className="scroll-mt-20 bg-ink py-24 sm:py-32">
       <div className="container-slick">
@@ -20,12 +21,12 @@ export function Projects() {
         />
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {site.projects.map((p, i) => (
+          {projects.map((p, i) => (
             <Reveal key={p.id} delay={((i % 3) + 1) as 1 | 2 | 3 | 4}>
               <article className="group flex h-full flex-col border border-smoke bg-coal transition-colors duration-300 hover:border-gold/50">
                 <div className="relative overflow-hidden">
                   <img
-                    src={images.projects[i] ?? images.projects[0]}
+                    src={p.image ?? images.projects[i] ?? images.projects[0]}
                     alt={`${p.name} — ${p.specialty}`}
                     loading="lazy"
                     className="aspect-[4/5] w-full object-cover grayscale transition-all duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"

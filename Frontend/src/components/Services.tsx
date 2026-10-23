@@ -1,16 +1,60 @@
 import { preselectBooking } from '../lib/booking'
-import { getServices, type Service } from '../lib/cms'
+import { useSite, type SiteService } from '../lib/site-context'
+import {
+  CURRENCIES,
+  convert,
+  formatPrice,
+  getRates,
+  parseUsd,
+} from '../lib/currency'
 import { SectionHeading } from './SectionHeading'
 import { Reveal } from './Reveal'
 import { ArrowRightIcon } from './Icons'
 import { useState, useEffect } from 'react'
 
+const CURRENCY_KEY = 'slick_currency'
+
 export function Services() {
-  const [services, setServices] = useState<Service[]>([])
-  
+  const { services: allServices } = useSite()
+  const services: SiteService[] = allServices.filter((s) => s.active !== false)
+  const [currency, setCurrency] = useState<string>(() => {
+    const saved = localStorage.getItem(CURRENCY_KEY)
+    return saved && CURRENCIES.some((c) => c.code === saved) ? saved : 'USD'
+  })
+  const [rates, setRates] = useState<Record<string, number> | null>(null)
+
   useEffect(() => {
-    setServices(getServices().filter(s => s.active))
-  }, [])
+    if (currency === 'USD') return
+    let active = true
+    getRates().then((r) => {
+      if (active && r) setRates(r.rates)
+    })
+    return () => {
+      active = false
+    }
+  }, [currency])
+
+  const activeCurrency = CURRENCIES.find((c) => c.code === currency) ?? CURRENCIES[0]
+
+  function handleCurrencyChange(code: string) {
+    setCurrency(code)
+    try {
+      localStorage.setItem(CURRENCY_KEY, code)
+    } catch {
+      /* storage unavailable */
+    }
+  }
+
+  function priceLabel(raw: string): string {
+    const usd = parseUsd(raw)
+    if (usd == null) return raw
+    if (currency === 'USD') return formatPrice(usd, CURRENCIES[0])
+    const converted = convert(usd, currency, rates)
+    if (converted == null) return formatPrice(usd, CURRENCIES[0])
+    return formatPrice(converted, activeCurrency)
+  }
+
+  const stillLoading = currency !== 'USD' && rates == null
 
   return (
     <section id="services" className="scroll-mt-20 bg-ink py-24 sm:py-32">
@@ -24,6 +68,32 @@ export function Services() {
           }
           sub="No fluff. Every deliverable is handled the same way — your story respected, the pace tight, the finish clean. Tap any service to start a project."
         />
+
+        <Reveal delay={1}>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <label
+              htmlFor="currency-select"
+              className="font-mono text-xs uppercase tracking-[0.2em] text-ashtray"
+            >
+              Show prices in
+            </label>
+            <select
+              id="currency-select"
+              value={currency}
+              onChange={(e) => handleCurrencyChange(e.target.value)}
+              className="cursor-pointer rounded-lg border border-smoke bg-coal px-3 py-2 font-mono text-xs uppercase tracking-wider text-bone outline-none transition focus:border-gold"
+            >
+              {CURRENCIES.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.code} · {c.label}
+                </option>
+              ))}
+            </select>
+            {stillLoading && (
+              <span className="font-mono text-[10px] uppercase tracking-widest text-ashtray/60">updating…</span>
+            )}
+          </div>
+        </Reveal>
 
         <ul className="mt-14 border-t border-smoke">
           {services.map((s, i) => (
@@ -52,7 +122,7 @@ export function Services() {
                   </div>
                   <div className="flex items-center gap-5 sm:justify-end">
                     <span className="font-mono text-xs uppercase tracking-widest text-ashtray/70">{s.duration}</span>
-                    <span className="min-w-14 text-right font-mono text-xl text-gold">{s.price}</span>
+                    <span className="min-w-14 text-right font-mono text-xl text-gold">{priceLabel(s.price)}</span>
                     <span
                       className="hidden text-gold transition-transform duration-200 group-hover:translate-x-1 sm:inline-block"
                       aria-hidden="true"
@@ -65,6 +135,14 @@ export function Services() {
             </Reveal>
           ))}
         </ul>
+
+        {currency !== 'USD' && (
+          <Reveal>
+            <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-widest text-ashtray/60">
+              Converted from USD · rates by open.er-api.com
+            </p>
+          </Reveal>
+        )}
 
         <Reveal delay={1}>
           <p className="mt-8 text-center font-mono text-xs uppercase tracking-[0.25em] text-ashtray">

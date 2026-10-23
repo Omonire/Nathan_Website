@@ -1,4 +1,5 @@
 # Sandbox (cloned repos live here, not part of the main site)
+# Sample or Inspo to the Nathan Site
 Sand_Box/
 
 # Dependencies
@@ -58,3 +59,6 @@ $RECYCLE.BIN/
 *.bak
 .temp/
 .tmp/
+
+# Frebuff Project ID
+.freebuff

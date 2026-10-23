@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { site } from '../data/site-content'
+import { useSite } from '../lib/site-context'
 import { FilmIcon } from './Icons'
 
 const SESSION_KEY = 'nathan_splash_seen'
@@ -15,6 +15,7 @@ function alreadySeen() {
 }
 
 export function Splash() {
+  const { content, services } = useSite()
   const [visible, setVisible] = useState(!alreadySeen())
   const [progress, setProgress] = useState(0)
   const [leaving, setLeaving] = useState(false)
@@ -81,7 +82,7 @@ export function Splash() {
 
   if (!visible) return null
 
-  const services = site.services.map((s) => s.name)
+  const serviceNames = services.map((s) => s.name)
 
   return (
     <div
@@ -111,13 +112,13 @@ export function Splash() {
         </div>
 
         <h2 className="animate-fade-in font-display text-3xl font-extrabold uppercase tracking-tight text-bone sm:text-4xl">
-          {site.brand.name}
+          {content.brand.name}
         </h2>
         <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.4em] text-gold">
-          {site.brand.studio}
+          {content.brand.studio}
         </p>
 
-        <p className="mt-6 max-w-xs text-sm leading-relaxed text-stone-mist">{site.brand.tagline}</p>
+        <p className="mt-6 max-w-xs text-sm leading-relaxed text-stone-mist">{content.brand.tagline}</p>
 
         <div className="mt-9 w-full max-w-xs">
           <div className="h-[3px] w-full overflow-hidden rounded-full bg-smoke">
@@ -133,7 +134,7 @@ export function Splash() {
         </div>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-          {services.map((name) => (
+          {serviceNames.map((name) => (
             <span
               key={name}
               className="rounded-full border border-smoke px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-ashtray"

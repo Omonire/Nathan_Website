@@ -82,7 +82,7 @@ export function About() {
                   Work With Me
                 </a>
                 <a
-                  href="#work"
+                  href="/work"
                   className="rounded-lg border border-smoke px-6 py-3 font-mono text-xs uppercase tracking-wider text-ashtray transition hover:border-gold hover:text-gold"
                 >
                   See The Work
