@@ -50,7 +50,7 @@ function App() {
       </main>
       <Footer />
       <MobileBookBar />
-      <div className="h-16 sm:hidden" aria-hidden="true" />
+      <div className="h-[calc(5rem+env(safe-area-inset-bottom))] sm:hidden" aria-hidden="true" />
     </div>
   )
 }

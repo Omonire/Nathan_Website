@@ -21,6 +21,10 @@ export function Hero() {
         className="absolute inset-0 size-full scale-125 object-cover opacity-40 blur-3xl pointer-events-none"
       />
       <div className="absolute inset-0 bg-linear-to-t from-ink via-ink/70 to-ink/40 pointer-events-none" aria-hidden="true" />
+      <div
+        className="pointer-events-none absolute -top-32 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-gold/10 blur-3xl sm:hidden"
+        aria-hidden="true"
+      />
 
       <div className="container-slick relative z-10 grid w-full items-center gap-12 pb-20 pt-32 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:pb-24 lg:pt-28">
         <div>
@@ -78,9 +82,9 @@ export function Hero() {
 
         {/* Showreel card — plays at native 9:16 so it never upscales/blurs */}
         <Reveal delay={2} className="order-first lg:order-none">
-          <figure className="relative mx-auto w-full max-w-[260px] sm:max-w-[300px] lg:max-w-[340px]">
-            <div className="relative overflow-hidden rounded-2xl border border-smoke bg-coal shadow-2xl">
-              <div className="relative aspect-[9/16]">
+          <figure className="relative mx-auto w-full max-w-[210px] sm:max-w-[300px] lg:max-w-[340px]">
+            <div className="relative overflow-hidden rounded-2xl border border-smoke bg-coal shadow-[0_0_60px_rgba(201,162,39,0.12)]">
+              <div className="relative aspect-[3/4] sm:aspect-[9/16]">
                 {!videoError ? (
                   <video
                     autoPlay

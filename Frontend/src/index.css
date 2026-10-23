@@ -44,6 +44,23 @@
     outline: 2px solid var(--color-gold);
     outline-offset: 3px;
   }
+
+  a,
+  button,
+  select {
+    touch-action: manipulation;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer utilities {

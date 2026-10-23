@@ -20,13 +20,13 @@ export function SectionHeading({ eyebrow, title, sub, align = 'center' }: Sectio
         </span>
       </Reveal>
       <Reveal delay={1}>
-        <h2 className="font-display text-4xl font-extrabold uppercase leading-[0.95] tracking-tight text-bone sm:text-5xl lg:text-6xl">
+        <h2 className="max-w-3xl text-balance font-display text-4xl font-extrabold uppercase leading-[0.95] tracking-tight text-bone sm:text-5xl lg:text-6xl">
           {title}
         </h2>
       </Reveal>
       {sub ? (
         <Reveal delay={2}>
-          <p className={`max-w-xl text-base leading-relaxed text-ashtray ${align === 'center' ? 'mx-auto' : ''}`}>
+          <p className={`max-w-xl text-pretty text-base leading-relaxed text-ashtray ${align === 'center' ? 'mx-auto' : ''}`}>
             {sub}
           </p>
         </Reveal>

@@ -101,7 +101,7 @@ export function Services() {
               <button
                 type="button"
                 onClick={() => preselectBooking({ serviceId: s.id })}
-                className="group w-full cursor-pointer border-b border-smoke py-6 text-left transition-colors duration-200 hover:bg-coal/50 sm:py-7"
+                className="group w-full cursor-pointer border-b border-smoke py-6 text-left transition-colors duration-200 hover:bg-coal/50 active:bg-coal/80 sm:py-7"
               >
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
                   <span className="hidden font-mono text-xs text-ashtray/60 sm:block" aria-hidden="true">
@@ -113,16 +113,19 @@ export function Services() {
                         {s.name}
                       </h3>
                       {s.hotDeal && (
-                        <span className="border border-gold/60 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-gold">
-                          🔥 Featured
+                        <span className="inline-flex items-center gap-1.5 border border-gold/60 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-gold">
+                          <span className="inline-block size-1 rounded-full bg-gold" aria-hidden="true" />
+                          Featured
                         </span>
                       )}
                     </div>
                     <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-ashtray">{s.description}</p>
                   </div>
-                  <div className="flex items-center gap-5 sm:justify-end">
-                    <span className="font-mono text-xs uppercase tracking-widest text-ashtray/70">{s.duration}</span>
-                    <span className="min-w-14 text-right font-mono text-xl text-gold">{priceLabel(s.price)}</span>
+                  <div className="flex items-center justify-between gap-4 border-t border-smoke/60 pt-3 sm:justify-end sm:border-0 sm:pt-0">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ashtray/70">{s.duration}</span>
+                    <span className="rounded-full border border-gold/30 bg-gold/5 px-3 py-1 font-mono text-lg text-gold sm:min-w-14 sm:rounded-none sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:text-right sm:text-xl">
+                      {priceLabel(s.price)}
+                    </span>
                     <span
                       className="hidden text-gold transition-transform duration-200 group-hover:translate-x-1 sm:inline-block"
                       aria-hidden="true"
