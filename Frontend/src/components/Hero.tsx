@@ -5,6 +5,7 @@ import { btnGhost, btnGold } from '../lib/ui'
 import { Reveal } from './Reveal'
 import { ArrowRightIcon, StarIcon } from './Icons'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export function Hero() {
   const { content } = useSite()
@@ -47,13 +48,13 @@ export function Hero() {
 
           <Reveal delay={3}>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <a href="#book" className={btnGold}>
+              <Link to="/book" className={btnGold}>
                 Start a Project
                 <ArrowRightIcon className="size-4" />
-              </a>
-              <a href="#services" className={btnGhost}>
+              </Link>
+              <Link to="/services" className={btnGhost}>
                 View Services
-              </a>
+              </Link>
             </div>
           </Reveal>
 

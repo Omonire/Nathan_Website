@@ -111,12 +111,12 @@ export function BlogPost() {
                 <p className="mt-2 text-sm text-ashtray">
                   Retention-first editing for YouTube creators, brands and podcasts.
                 </p>
-                <a
-                  href="/#book"
+                <Link
+                  to="/book"
                   className="mt-5 inline-block rounded-lg bg-gold px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-ink transition hover:bg-gold/80"
                 >
                   Start a Project
-                </a>
+                </Link>
               </div>
             </Reveal>
           )}

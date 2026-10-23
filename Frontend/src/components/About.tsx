@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { site } from '../data/site-content'
 import { images } from '../data/images'
 import { Reveal } from './Reveal'
@@ -81,12 +82,12 @@ export function About() {
                 >
                   Work With Me
                 </a>
-                <a
-                  href="/work"
+                <Link
+                  to="/work"
                   className="rounded-lg border border-smoke px-6 py-3 font-mono text-xs uppercase tracking-wider text-ashtray transition hover:border-gold hover:text-gold"
                 >
                   See The Work
-                </a>
+                </Link>
               </div>
             </Reveal>
           </div>

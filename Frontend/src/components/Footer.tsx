@@ -12,10 +12,10 @@ const socialIcons: Record<string, (props: { className?: string }) => JSX.Element
 }
 
 const navLinks = [
-  { href: '/#services', label: 'Services' },
+  { href: '/services', label: 'Services' },
   { href: '/work', label: 'Selected Work' },
-  { href: '/#projects', label: 'Projects' },
-  { href: '/#reviews', label: 'Reviews' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/reviews', label: 'Reviews' },
   { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
 ]
@@ -30,9 +30,9 @@ export function Footer() {
           <h2 className="font-display text-4xl font-black uppercase leading-[0.95] tracking-tight text-bone sm:text-6xl">
             Let's make it <span className="text-gold-gradient">convert.</span>
           </h2>
-          <a href="/#book" className={btnGold}>
+          <Link to="/book" className={btnGold}>
             Start a Project
-          </a>
+          </Link>
         </div>
       </Reveal>
 
@@ -51,15 +51,9 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5">
               {navLinks.map((l) => (
                 <li key={l.href}>
-                  {l.href.includes('#') ? (
-                    <a href={l.href} className="cursor-pointer text-sm text-stone-mist transition-colors hover:text-gold">
-                      {l.label}
-                    </a>
-                  ) : (
-                    <Link to={l.href} className="cursor-pointer text-sm text-stone-mist transition-colors hover:text-gold">
-                      {l.label}
-                    </Link>
-                  )}
+                  <Link to={l.href} className="cursor-pointer text-sm text-stone-mist transition-colors hover:text-gold">
+                    {l.label}
+                  </Link>
                 </li>
               ))}
             </ul>

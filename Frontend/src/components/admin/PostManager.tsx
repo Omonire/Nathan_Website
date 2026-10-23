@@ -7,6 +7,8 @@ import {
   type Post,
   type PostInput,
 } from '../../lib/posts'
+import type { BlogDraft } from '../../lib/ai'
+import { AiBlogAssistant } from './AiBlogAssistant'
 
 const emptyForm: PostInput = {
   title: '',
@@ -48,6 +50,20 @@ export function PostManager() {
   function openNew() {
     setEditing(null)
     setForm(emptyForm)
+    setError(null)
+    setShowForm(true)
+  }
+
+  function applyDraft(draft: BlogDraft) {
+    setEditing(null)
+    setForm({
+      title: draft.title,
+      excerpt: draft.excerpt,
+      body: draft.body,
+      cover: '',
+      tag: draft.tag,
+      status: 'draft',
+    })
     setError(null)
     setShowForm(true)
   }
@@ -122,6 +138,8 @@ export function PostManager() {
           + New Post
         </button>
       </div>
+
+      <AiBlogAssistant existingTitles={posts.map((post) => post.title)} onDraft={applyDraft} />
 
       {error && (
         <p className="rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 font-mono text-xs text-red-400">
